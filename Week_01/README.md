@@ -1,5 +1,34 @@
 学习笔记
+```java
+public class Hello {
 
+    static final long count = 0;
+
+    private double sum = 0.0D;
+
+    public double getSum() {
+        return sum;
+    }
+
+    public void setSum(double sum) {
+        this.sum = sum;
+    }
+
+    public static void main(String[] args) {
+        Hello hello = new Hello();
+        double sum = hello.getSum();
+        for (int i = 6; i > count; i--) {
+            if (0 == i % 2) {
+                sum += i;
+            } else {
+                sum *= i;
+            }
+        }
+        hello.setSum(sum);
+    }
+}
+```
+对上述代码编译后，对class文件执行`javap -c -verbose Hello.class`，得到对应的字节码，下面对字节码进行解读
 ```java
 public class java00.day01.Hello
   minor version: 0
@@ -7,7 +36,7 @@ public class java00.day01.Hello
   flags: ACC_PUBLIC, ACC_SUPER
 ```
 
-`minor version`和`major version`表达当前java小版本，例如环境中使用的是1.8_52_0，`ACC_PUBLIC`访问修饰符为public，`ACC_SUPER`访问父类？
+`minor version: 0`和`major version: 52`表达当前java的次版本和主版本，java的版本号从45开始，除1.0和1.1都是使用45.x外,以后每升一个大版本，版本号加1，所以代码运行的环境是1.8.0的java版本，实际环境中使用的是1.8.0_231，匹配上了。`flags: ACC_PUBLIC, ACC_SUPER`表示访问标识为public，`ACC_SUPER`表示允许使用invokespecial字节码指令的新语义。
 
 ```java
 Constant pool:
