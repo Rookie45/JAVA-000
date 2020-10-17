@@ -1,5 +1,15 @@
 学习笔记
 ```java
+package java00.day01;
+
+/**
+ * java字节码由单字节指令组成
+ * 根据指令性质主要分为：
+ * 1.栈操作指令
+ * 2.程序流程控制指令
+ * 3.对象操作指令
+ * 4.算术运算与类型转换指令
+ */
 public class Hello {
 
     static final long count = 0;
