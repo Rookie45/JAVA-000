@@ -124,11 +124,42 @@ Constant pool:
             0      10     0  this   Ljava00/day01/Hello;
 ```
 
-这块表示Hello类的默认构造函数，首先是方法描述符`descriptor: ()V`，表示返回值void，且无参。接着`flags: ACC_PUBLIC`，表示访问标识为public。后面则是函数体内容，首先`stack=3, locals=1, args_size=1`，“stack=3“表示该段code使用到的最大操作数栈，"locals=1"表示局部变量所需空间，参数
+这块表示Hello类的默认构造函数，首先是方法描述符`descriptor: ()V`，表示返回值void，且无参。接着`flags: ACC_PUBLIC`，表示访问标识为public。后面则是函数体内容，首先`stack=3, locals=1, args_size=1`，“stack=3“表示该段code使用到的最大操作数栈，"locals=1"表示局部变量所需空间为1，"args_size=1"表示方法参数个数为1。
 
+```java
+         0: aload_0             //表示取LocalVariableTable中slot为0的对象load到操作栈内
+         1: invokespecial #1    // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: dconst_0            //表示常量0，类型为double
+         6: putfield      #2    // Field sum:D，表示给对象字段sum赋值，值为常量池中#2
+         9: return
+```
+
+接着是方法体内容，每行指令含义如上所示，这块内容的意思是将this推送至栈顶，然后执行该类型的实例化方法，接着再次将this入栈，将常量0也入栈，在栈中执行字段赋值，最后执行返回语句，结束方法。
+
+```
+      LineNumberTable:
+        line 11: 0             //源码中11行，对应字节码行号为0处
+        line 15: 4             //源码中15行，对应字节码行号为4处
+```
+
+上面是`LineNumberTable`，它描述源码行号与字节码行号（偏移量）对应关系。
+
+```java
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      10     0  this   Ljava00/day01/Hello; //
+```
+
+上面是`LocalVariableTable`，它描述帧栈中局部变量与源码中定义的变量之间的关系。“start” 表示该局部变量在哪一行开始可见，“length”表示可见行数，“Slot”代表所在帧栈位置，“Name”是变量名称，然后Signature是类型签名。
 
 
 参考
+[java进阶训练营](https://u.geekbang.org/subject/java/1000579?utm_source=u_list_web&utm_medium=u_list_web&utm_term=u_list_web)
 
 [轻松看懂Java字节码](https://juejin.im/post/6844903588716609543)
+
+[Jvm系列3—字节码指令](http://gityuan.com/2015/10/24/jvm-bytecode-grammar/)
+
+[jvms-putfield](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.putfield)
 
