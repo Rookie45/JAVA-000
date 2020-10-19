@@ -30,6 +30,7 @@ jps -mlv
 ===========================
 jstat -gc 8188 1000 10
 
+```java
  S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU   CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT
 ...
 15360.0 16896.0  0.0    0.0   203264.0 202256.3  74752.0    19413.4   35496.0 33775.6 4864.0 4561.2      8    0.446   2      0.327    0.773
@@ -37,12 +38,12 @@ jstat -gc 8188 1000 10
 19456.0 16896.0  0.0   16878.4 203264.0  9028.1   74752.0    21034.3   49664.0 47024.7 6656.0 6163.1      9    0.531   2      0.327    0.857
 19456.0 16896.0  0.0   16878.4 203264.0 10072.2   74752.0    21034.3   49664.0 47024.7 6656.0 6163.1      9    0.531   2      0.327    0.857
 ...
-
+```
 S0C：表示s0存活区的当前容量，单位kB（后面容量均为kB）；S1C：表示s1存活区的当前容量；S0U表示s0存活区的使用量；S1U：表示s1存活区的使用量；EC：表示Eden区新生代的当前容量；EU：表示Eden区新生代的使用量； OC：表示Old区老年代当前容量； OU：表示Old区老年代使用量；MC：表示元数据区的容量； MU：表示元数据区的使用量；CCSC：压缩的class空间容量；CCSU：压缩的class空间使用量； YGC：年轻代GC的次数；YGCT：年轻代GC消耗总时间，单位ms（后面时间均为ms）；FGC：Full GC的次数；FGCT：Full GC消耗总时间； GCT：垃圾收集消耗的总时间；
 据此分析运行的web程序，中间发生了一次Young GC，耗时0.085ms，Eden区使用量从203264.0kB降到9028.1kB，S1使用量从0.0kB涨到16878.4kB。
 
 jmap -heap 8188
-
+```java
 Attaching to process ID 8188, please wait...
 Debugger attached successfully.
 Server compiler detected.
@@ -89,9 +90,11 @@ PS Old Generation
    21.131087666717022% used
 
 17988 interned Strings occupying 2308376 bytes.
+```
 
 jstack -l 8188
 
+```java
 2020-10-19 14:12:11
 Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.112-b15 mixed mode):
 
@@ -558,7 +561,7 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.112-b15 mixed mode):
 "VM Periodic Task Thread" os_prio=2 tid=0x000000005acf4800 nid=0x2758 waiting on condition 
 
 JNI global references: 1119
-
+```
 
 
 参考
