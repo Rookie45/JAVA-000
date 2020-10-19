@@ -39,7 +39,7 @@ jstat -gc 8188 1000 10
 ...
 
 S0C：表示s0存活区的当前容量，单位kB（后面容量均为kB）；S1C：表示s1存活区的当前容量；S0U表示s0存活区的使用量；S1U：表示s1存活区的使用量；EC：表示Eden区新生代的当前容量；EU：表示Eden区新生代的使用量； OC：表示Old区老年代当前容量； OU：表示Old区老年代使用量；MC：表示元数据区的容量； MU：表示元数据区的使用量；CCSC：压缩的class空间容量；CCSU：压缩的class空间使用量； YGC：年轻代GC的次数；YGCT：年轻代GC消耗总时间，单位ms（后面时间均为ms）；FGC：Full GC的次数；FGCT：Full GC消耗总时间； GCT：垃圾收集消耗的总时间；
-据此分析运行的web程序，中间发生了一次Young GC，耗时0.085ms
+据此分析运行的web程序，中间发生了一次Young GC，耗时0.085ms，Eden区使用量从203264.0kB降到9028.1kB，S1使用量从0.0kB涨到16878.4kB。
 
 jmap -heap 8188
 
