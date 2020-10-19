@@ -165,18 +165,18 @@ Constant pool:
          7: astore_1                    //将栈顶对象存入局部变量hello
          8: aload_1                     //将hello对象加载到栈中
          9: invokevirtual #5            //Method getSum:()D，弹出hello，调用getsum
-        12: dstore_2					//取栈顶double值存入局部变量sum
-        13: bipush        6				//将6入栈
+        12: dstore_2                    //取栈顶double值存入局部变量sum
+        13: bipush        6             //将6入栈
         15: istore        4             //将栈顶元素存入局部变量i
-        17: iload         4				//将局部变量i加载到栈顶
-        19: i2l							//将i从int转为long
-        20: lconst_0					//常数0入栈
-        21: lcmp						//栈中i和0出栈作比较，返回-1/0/1
-        22: ifle          54			//将栈顶元素出栈与0比较，小于等于0则移动至54处执行
+        17: iload         4             //将局部变量i加载到栈顶
+        19: i2l                         //将i从int转为long
+        20: lconst_0                    //常数0入栈
+        21: lcmp                        //栈中i和0出栈作比较，返回-1/0/1
+        22: ifle          54            //将栈顶元素出栈与0比较，小于等于0则移动至54处执行
         25: iconst_0                    //常量0入栈
-        26: iload         4				//加载局部变量i到栈顶
+        26: iload         4             //加载局部变量i到栈顶
         28: iconst_2                    //将2入栈
-        29: irem						//将栈顶两元素出栈取模运算，值入栈
+        29: irem                        //将栈顶两元素出栈取模运算，值入栈
         30: if_icmpne     42            //将栈顶两元素出栈比较，不等则移动至42处执行
         33: dload_2                     //将局部变量sum入栈
         34: iload         4             //将i入栈
