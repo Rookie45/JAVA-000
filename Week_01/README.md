@@ -154,6 +154,9 @@ Constant pool:
 上面是`LocalVariableTable`，它描述帧栈中局部变量与源码中定义的变量之间的关系。“start” 表示该局部变量在哪一行开始可见，“length”表示可见行数，“Slot”代表所在帧栈位置，“Name”是变量名称，然后Signature是类型签名。
 
 
+
+JVM在内存小于1GB以及1GB以上的默认分配情况，是不一样的。
+
 参考
 [java进阶训练营](https://u.geekbang.org/subject/java/1000579?utm_source=u_list_web&utm_medium=u_list_web&utm_term=u_list_web)
 
