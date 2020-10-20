@@ -1,8 +1,10 @@
 **题目**
+
 本机使用G1 GC启动一个程序，仿照课上案例分析一下JVM情况
 
 **答题如下**
 
+在IDEA的VM Options添加-XX:+UseG1GC -XX:MaxGCPauseMillis=50，运行程序
 
 ```shell
 C:\Users\sl>jps -mlv
