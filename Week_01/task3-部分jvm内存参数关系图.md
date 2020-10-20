@@ -4,7 +4,7 @@
 
 **答题如下：**
 
-![](E:\Code\java_geekbang\JAVA-000\Week_01\JVM参数之间关系.png)
+![](JVM参数之间关系.png)
 
 > Xmx：最大堆大小
 > Xms：最小堆大小
