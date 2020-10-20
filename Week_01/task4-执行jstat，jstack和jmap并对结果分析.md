@@ -24,14 +24,23 @@
 ```
 
 > -XX:TieredStopAtLevel=1 表示解释执行后，直接由C1编译器进行编译。在java8开始，默认开启分层编译，原来的参数-client和-server参数无效。C1是Hotspot虚拟机中的一个即时编译器。
+>
 > -Xverify:none 表示禁用验证器，该值在java13中被废弃，与此相对的，-Xverify:all 表示对所有类启动验证，另外还有-Xverify和-Xverify:remote，两者等效，表示对所有非引导类启动验证。
+>
 > -Dcom.sun.management.jmxremote 表示是否支持远程JMX访问，默认true 
+>
 > -Dcom.sun.management.jmxremote.port=56857 表示监听端口号56857，方便远程访问 
+>
 > -Dcom.sun.management.jmxremote.authenticate=false 表示不开启用户认证，默认开启
+>
 > -Dcom.sun.management.jmxremote.ssl=false 表示连接不开启SSL加密，默认开启 
+>
 > -Djava.rmi.server.hostname=localhost 表示主机名字符串，用于给客户端调用自己对象上的方法，默认本地主机IP地址
+>
 > -Dspring.application.admin.enabled=true 表示开启与管理员相关的功能,可以用于远程管理springboot应用
+>
 > -javaagent:jarpath[=options]启动外部的agent库
+>
 > -Dfile.encoding=UTF-8 设置文件编码UTF-8
 
 
@@ -48,6 +57,7 @@
 ...
 ```
 > S0C：表示s0存活区的当前容量，单位kB（后面容量均为kB）；S1C：表示s1存活区的当前容量；S0U表示s0存活区的使用量；S1U：表示s1存活区的使用量；EC：表示Eden区新生代的当前容量；EU：表示Eden区新生代的使用量； OC：表示Old区老年代当前容量； OU：表示Old区老年代使用量；MC：表示元数据区的容量； MU：表示元数据区的使用量；CCSC：压缩的class空间容量；CCSU：压缩的class空间使用量； YGC：年轻代GC的次数；YGCT：年轻代GC消耗总时间，单位ms（后面时间均为ms）；FGC：Full GC的次数；FGCT：Full GC消耗总时间； GCT：垃圾收集消耗的总时间；
+>
 > 据此分析运行的web程序，中间发生了一次Young GC，耗时0.085ms，Eden区使用量从203264.0kB降到9028.1kB，S1使用量从0.0kB涨到16878.4kB。
 
 
@@ -281,6 +291,7 @@ Found 1 deadlock.
 > 据上述输出数据进行分析，jstack用于查看线程堆栈信息，在发生死锁的时候可以利用这个命令查找死锁或者在发生死循环的时候利用此命令排查。观察输出的最后的结果**Found 1 deadlock**，发现一个死锁，往上看，DeadLock类的Thread1在持有<0x000000076b9a5278>，等待<0x000000076b9a5268>，而DeadLock类的Thread0在持有<0x000000076b9a5268>，等待<0x000000076b9a5278>，由此形成了循环等待，导致死锁。从上面的信息，可以清楚看到发生问题的类DeadLock，发生问题的代码行数41和23，争抢的锁资源为两个Object对象。
 >
 > 上述信息中几个参数的含义：
+>
 >tid：java内的线程ID；nid：操作系统级别的线程ID；prio：java内定义的线程优先级；os_prio：操作系统级别的优先级
 >
 > 一般jstack输出信息比较长，控制台输出阅读不便，所以会结合“>”输出到文本中，比如`jstack -l 14512 > stack14512.txt`。另外，循环死锁一般配合Top命令一起使用，因为循环死锁会导致CPU不断升高，可以通过`top`命令查看占用CPU高的进程，再通过`top -H -p PID`查看进程中具体哪条线程CPU利用率高，由于在top中使用的是10进制，在jstack中打印的线程是16进制，要对应上线程id需要做个转换。
