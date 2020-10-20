@@ -4,7 +4,7 @@
 
 **答题如下：**
 
-![](JVM参数之间关系.png)
+![](https://github.com/Rookie45/JAVA-000/blob/main/Week_01/JVM%E5%8F%82%E6%95%B0%E4%B9%8B%E9%97%B4%E5%85%B3%E7%B3%BB.png)
 
 > Xmx：最大堆大小
 > Xms：最小堆大小
