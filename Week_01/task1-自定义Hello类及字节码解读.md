@@ -223,4 +223,11 @@ Constant pool:
 SourceFile: "Hello.java"
 
 ```
+参考
+[java进阶训练营](https://u.geekbang.org/subject/java/1000579?utm_source=u_list_web&utm_medium=u_list_web&utm_term=u_list_web)
 
+[轻松看懂Java字节码](https://juejin.im/post/6844903588716609543)
+
+[Jvm系列3—字节码指令](http://gityuan.com/2015/10/24/jvm-bytecode-grammar/)
+
+[jvms-putfield](https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.putfield)
