@@ -84,3 +84,6 @@ G1 Old Generation:
 
 > 可以看到开启了G1，同样使用了8个线程执行GC，这个数值可以通过-XX:ParallelGCThreads设置，当CPU核数<=8时，该值默认为CUP核数，当>8时，该值默认为5*CPU/8+3；G1情况下，JVM堆最小空闲比率40，最大空闲比率70。新生代和老年代的相关参数有较大变化，另外可以看到Region设置1MB，另外可以看到Eden、Survivor以及Old区都有表示大小是几个regions。
 
+参考
+
+[java进阶训练营](https://u.geekbang.org/subject/java/1000579?utm_source=u_list_web&utm_medium=u_list_web&utm_term=u_list_web)
