@@ -15,7 +15,7 @@
 
 > Xss如果不显示设置，在64位Linux上HotSpot的线程栈容量默认是1MB，此外内核数据结构还会额外消耗16KB。而一个协程的栈通常在几百字节到几KB之间，差了1个数量级。
 
-> G1 gc一般推荐Xms==Xmx，同时不设置Xmn，这是由于G1适合由自己完全管理内存，Young区可以根据需要控制有多少个region，如果设置了Xmn，反而定死了Young区。Xms和Xmx设置时，可以配置-XX:+HeapDumpOnOutOfMemoryError参数，让虚拟机在出现内存溢出时Dump出当前的内存堆转储快照，以便事后分析。那推荐-XX:+HeapDumpOnOutOfMemoryError在线上环境配置吗？另外关于Xms，经验值一般设置为当前系统内存的70%。
+> G1 gc一般推荐Xms==Xmx，同时不设置Xmn，这是由于G1适合由自己完全管理内存，Young区可以根据需要控制有多少个region，如果设置了Xmn，反而定死了Young区。Xms和Xmx设置时，可以配置-XX:+HeapDumpOnOutOfMemoryError参数（可以在生产环境配置），让虚拟机在出现内存溢出时Dump出当前的内存堆转储快照，以便事后分析。另外关于Xms，经验值一般设置为当前系统内存的70%。
 
 > metaspace代替了永久代，存储一些类型信息，比如静态变量和方法，与Compressed Class Space有交叉
 
