@@ -7,6 +7,7 @@
 > **jps -mlv**
 
 ```java
+...
 8188 ltd.newbee.mall.NewBeeMallApplication 
 -XX:TieredStopAtLevel=1 
 -Xverify:none
