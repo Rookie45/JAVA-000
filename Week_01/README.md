@@ -121,7 +121,7 @@ Constant pool:
 
 `LineNumberTable`描述源码行号与字节码行号（偏移量）对应关系。
 
-`LocalVariableTable`描述帧栈中局部变量与源码中定义的变量之间的关系。“start” 表示该局部变量在哪一行开始可见，“length”表示可见行数，“Slot”代表所在帧栈位置，“Name”是变量名称，然后Signature是类型签名。
+`LocalVariableTable`描述帧栈中局部变量与源码中定义的变量之间的关系。“start” 表示该局部变量在哪一行开始可见，“length”表示可见行数，“Slot”代表所在帧栈位置（它是局部变量表最基础的存储单位，32位以内类型占一个slot），“Name”是变量名称，然后“Signature”是类型签名。
 
 总体来说，变量从局部变量表中load到操作栈中进行操作计算，将中间结果store到局部变量表，这期间会用Constant Pool进行一些值的查找，在所有操作计算结束后，弹出栈返回。
 
@@ -177,6 +177,8 @@ JVM的类加载器有三类：
 JVM内存模型
 ===========
 
+堆内存主要包括老年代，新生代以及存活区；非堆内存主要包括Metaspace，CodeCache以及CompressedClassSpace等
+
 常量池在 Meta区， 静态变量本身的存储区域在非堆中，当然也可能是指针，指向其他区域。 Meta区这些概念是Hotspot具体实现的，学习时注意规范与具体实现的区别， JVM规范并没有规定说你必须实现哪个区。
 
 
@@ -200,25 +202,24 @@ JDK内置命令行工具与图形化工具
 
 
 
-工具命令|简介
+工具or命令|简介
 ------------ | -------------
 jps/jinfo|查看java进程
-jstat|查看JVM内存gc的相关信息
-jmap|查看heap或类占用空间
-jstack|查看线程信息
-jcmd|执行JVM相关分析命令（整合性的命令）
+jstat|查看JVM内存gc的相关信息，jstat -gc pid 收集时间间隔(ms) 收集次数
+jmap|查看heap或类占用空间，jmap -heap pid
+jstack|查看线程信息 ，jstack -l pid
+jcmd|执行JVM相关分析命令（整合性的命令），jcmd pid 参数
 jrunscript/jjs|执行js命令
-
-
-jps/jinfo     jstat    jmap    jstack    jcmd    jrunscript/jjs
-
-jsconsole    jvisualvm    visualGC    jmc
+jsconsole工具| 查看堆内存使用量，线程，类，CPU占用率 
+jvisualvm工具| 同样可以查看堆，线程，类，CPU占用率，另外有快照功能，进行瞬时分析 
+visualGC工具|主要对堆和GC情况进行详细展示，可以在idea以插件形式安装
+jmc工具|对应用进行管理，监控，分析以及故障排查的工具套件，很强
 
 
 GC的背景与一般原理
 ==========
 
-
+源于内存资源有限，资源的回收与再利用是必然的，那么回收的方式可以手动，也可以专门程序来做。回收的实现方式，有引用计数，但由于它无法解决环型引用，因为这种情况，引用的计数是永不为0的，这就造成内存泄漏（内存无法回收），如果这种情况再多点，就造成内存溢出（无可用内存）。由此，有了引用跟踪，即由某几个存活对象开始，标记与它有关联的对象，未被标记的对象，即为可回收对象，这样一来能解决环形引用，二来不用扫描所有对象。
 
 各个GC的简介
 ==========
