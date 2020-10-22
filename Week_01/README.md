@@ -202,7 +202,7 @@ JVM启动参数
 
 Xss如果不显示设置，在64位Linux上HotSpot的线程栈容量默认是1MB，此外内核数据结构还会额外消耗16KB。而一个协程的栈通常在几百字节到几KB之间，差了1个数量级。
 
-Xms和Xmx设置时，可以配置-XX:+HeapDumpOnOutOfMemoryError参数，让虚拟机在出现内存溢出时Dump出当前的内存堆转储快照，以便事后分析。那推荐-XX:+HeapDumpOnOutOfMemoryError在线上环境配置吗？另外关于Xms，经验值一般设置为当前系统内存的70%。
+Xms（memory start size）和Xmx（memory max size）设置时（单位Byte），可以配置-XX:+HeapDumpOnOutOfMemoryError参数，让虚拟机在出现内存溢出时Dump出当前的内存堆转储快照，以便事后分析。那推荐-XX:+HeapDumpOnOutOfMemoryError在线上环境配置吗？另外关于Xms，经验值一般设置为当前系统内存的70%。
 
 metaspace代替了永久代，存储一些类型信息，比如静态变量和方法，与Compressed Class Space有交叉
 
