@@ -127,10 +127,7 @@ Github
 ```java
 package java00.week02;
 
-
 import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -138,17 +135,12 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MyHttpClient {
     private static final String URL = "http://localhost:8801";
@@ -165,21 +157,13 @@ public class MyHttpClient {
     }
 
     public static String httpGet(String url) {
-        return httpGet(url, new HashMap<>());
-    }
-
-    public static String httpGet(String url, Map<String, String> headers) {
         String response = null;
-        if (null == url || null == headers) {
+        if (null == url) {
             return response;
         }
         HttpGet httpGet = null;
-        List<NameValuePair> params = new ArrayList<>();
-        for (String key : headers.keySet()) {
-            params.add(new BasicNameValuePair(key, headers.get(key)));
-        }
         try {
-            URI uri = new URIBuilder(url).addParameters(params).build();
+            URI uri = new URIBuilder(url).build();
             httpGet = new HttpGet(uri);
             response = execute(httpGet);
         } catch (URISyntaxException e) {
@@ -187,7 +171,7 @@ public class MyHttpClient {
         }
         return response;
     }
-    
+
     private static String execute(HttpRequestBase requestBase) {
         String responseResult = null;
         CloseableHttpResponse response = null;
@@ -213,6 +197,54 @@ public class MyHttpClient {
                 e.printStackTrace();
             }
 
+        }
+        return responseResult;
+    }
+}
+
+package java00.week02;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+public class MyOkHttp {
+    private static final String URL = "http://localhost:8801";
+    private static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
+            .connectTimeout(5L, TimeUnit.SECONDS)
+            .readTimeout(5L, TimeUnit.SECONDS)
+            .build();
+
+    public static void main(String[] args) {
+        System.out.println(httpGet(URL));
+    }
+
+    public static String httpGet(String url) {
+        String response = null;
+        if (null == url) {
+            return response;
+        }
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        response = execute(request);
+        return response;
+    }
+
+    private static String execute(Request request) {
+        String responseResult = null;
+        try (Response response = HTTP_CLIENT.newCall(request).execute()){
+            if (null == response) {
+                return responseResult;
+            }
+            if (response.isSuccessful() && null != response.body()) {
+                responseResult =response.body().string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return responseResult;
     }
