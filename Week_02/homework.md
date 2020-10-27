@@ -100,6 +100,57 @@ GC发生的原因是分配内存失败`Allocation Failure`，年轻代使用串�
 
 **答题如下**：
 
+```java
+PS E:\Book\训练营\week2\day03> sb -u http://localhost:8088/api/hello -c 20 -N 60
+Starting at 2020/10/26 23:21:33
+[Press C to stop the test]
+422769  (RPS: 6627.5)
+---------------Finished!----------------
+Finished at 2020/10/26 23:22:37 (took 00:01:03.9202427)
+Status 200:    422771
+
+RPS: 6914.2 (requests/second)
+Max: 79ms
+Min: 0ms
+Avg: 0.1ms
+
+  50%   below 0ms
+  60%   below 0ms
+  70%   below 0ms
+  80%   below 0ms
+  90%   below 0ms
+  95%   below 0ms
+  98%   below 2ms
+  99%   below 3ms
+99.9%   below 12ms
+```
+
+> 程序启动参数为：` java -jar -Xmx1g -Xms1g .\gateway-server-0.0.1-SNAPSHOT.jar`。依据上面的数据可得，吞吐量为6914每秒，最大延迟为79ms，最低为0ms，平均0.1ms。再次压测，分别用**jvisualvm**和**jmc**工具对压测过程中内存使用和GC情况进行监控统计。
+
+![jvisualvm](E:\Code\java_geekbang\JAVA-000\Week_02\gateway-jvisualvm.png)
+
+> 上述图为**jvisualvm**工具监控内存做的数据统计，每次波峰到波谷的跳变，即发生一次GC，图中总共发生27次GC。
+
+![gateway-jmc1](E:\Code\java_geekbang\JAVA-000\Week_02\gateway-jmc1.PNG)
+
+![gateway-jmc2](E:\Code\java_geekbang\JAVA-000\Week_02\gateway-jmc2.PNG)
+
+![gateway-jmc3](E:\Code\java_geekbang\JAVA-000\Week_02\gateway-jmc3.PNG)
+
+> 上述三张图为**jmc**工具监控的数据统计，利用了它的飞行器功能，统计1分钟内程序运行中发生的情况。可以简要看出整个压测过程中，堆平均使用187MB，最大使用356MB，CPU平均使用63.8%，最大使用99.6%，GC暂停时间平均2ms608us，最大3ms990us；程序运行的PC运行的线程数为4*8=32，物理内存为16GB，默认情况下，GC线程为CPU的1/4，即为8；默认heap的大小为总内存的1/4，即4GB，而由于程序启动时指定了堆大小1GB，所以统计显示的是1GB，java8默认使用的垃圾收集器为并行收集器，与统计信息相符合。
+
+```java
+PS E:\Book\训练营\week2\day03> jmap -heap 16980
+Attaching to process ID 16980, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.191-b12
+
+using thread-local object allocation.
+Parallel GC with 8 thread(s)
+...
+```
+
 
 
 **题目3：**
@@ -108,17 +159,160 @@ GC发生的原因是分配内存失败`Allocation Failure`，年轻代使用串�
 
 **答题如下**：
 
+```java
+PS E:\Book\训练营\week2\day03> sb -u http://localhost:28089/admin/test -c 20 -N 60
+Starting at 2020/10/27 7:56:28
+[Press C to stop the test]
+163604  (RPS: 2539.8)
+---------------Finished!----------------
+Finished at 2020/10/27 7:57:32 (took 00:01:04.4926086)
+Status 200:    163605
+
+RPS: 2676.9 (requests/second)
+Max: 136ms
+Min: 0ms
+Avg: 3.6ms
+
+  50%   below 2ms
+  60%   below 3ms
+  70%   below 4ms
+  80%   below 5ms
+  90%   below 7ms
+  95%   below 10ms
+  98%   below 14ms
+  99%   below 18ms
+99.9%   below 42ms
+```
+
+程序启动参数为：` java -jar -Xms1g -Xmx1g .\newbee-mall-1.0.0-SNAPSHOT.jar`。依据上面的数据可得，吞吐量为2676每秒，最大延迟为136ms，最低为0ms，平均3.6ms。接着分别用**jvisualvm**和**jmc**工具对压测过程中内存使用和GC情况进行监控统计。
+
+![mall-jvisualvm](E:\Code\java_geekbang\JAVA-000\Week_02\mall-jvisualvm.PNG)
+
+> 上述图为**jvisualvm**工具监控内存做的数据统计，压测时间[8:01:36, 8:02:40]每次波峰到波谷的跳变，即发生一次GC，图中总共发生21次GC。
+
+![mall-jmc1](E:\Code\java_geekbang\JAVA-000\Week_02\mall-jmc1.PNG)
+
+![mall-jmc2](E:\Code\java_geekbang\JAVA-000\Week_02\mall-jmc2.PNG)
+
+> 上述两张图为**jmc**工具监控的数据统计，统计1分钟内程序运行中发生的情况。可以简要看出整个压测过程中，堆平均使用410MB，最大使用614MB，CPU平均使用81.2%，最大使用100%，GC暂停时间平均18ms537us，最大35ms332us；初始堆大小和最大堆大小为1GB，使用的垃圾收集器为并行收集器，共发生了72次GC，这里能看到最短暂停7ms811us。
+
 
 
 **题目4：**
 
-运行课上的例子，以及 Netty 的例子，分析相关现象。  
+根据上述自己对于1和2的演示，写一段对于不同 GC 的总结，提交到 Github。  
 
 **答题如下**：
 
 
 
 **题目5：**
+
+运行课上的例子，以及 Netty 的例子，分析相关现象。  
+
+**答题如下**：
+
+```java
+PS E:\Book\训练营\week2\day03> sb -u http://localhost:8801 -c 20 -N 60
+Starting at 2020/10/27 8:30:09
+[Press C to stop the test]
+2031    (RPS: 31.6)
+---------------Finished!----------------
+Finished at 2020/10/27 8:31:14 (took 00:01:04.3449906)
+2045    (RPS: 31.8)                     Status 200:    2045
+
+RPS: 33.4 (requests/second)
+Max: 645ms
+Min: 51ms
+Avg: 587.7ms
+
+  50%   below 595ms
+  60%   below 608ms
+  70%   below 617ms
+  80%   below 623ms
+  90%   below 623ms
+  95%   below 624ms
+  98%   below 625ms
+  99%   below 625ms
+99.9%   below 626ms
+
+PS E:\Book\训练营\week2\day03> sb -u http://localhost:8802 -c 20 -N 60
+Starting at 2020/10/27 8:33:31
+[Press C to stop the test]
+38530   (RPS: 600.2)
+---------------Finished!----------------
+Finished at 2020/10/27 8:34:35 (took 00:01:04.2749597)
+Status 200:    38520
+Status 303:    12
+
+RPS: 630.6 (requests/second)
+Max: 83ms
+Min: 14ms
+Avg: 27ms
+
+  50%   below 27ms
+  60%   below 28ms
+  70%   below 29ms
+  80%   below 30ms
+  90%   below 31ms
+  95%   below 33ms
+  98%   below 36ms
+  99%   below 39ms
+99.9%   below 58ms
+    
+PS E:\Book\训练营\week2\day03> sb -u http://localhost:8803 -c 20 -N 60
+Starting at 2020/10/27 8:35:57
+[Press C to stop the test]
+39108   (RPS: 608.4)
+---------------Finished!----------------
+Finished at 2020/10/27 8:37:01 (took 00:01:04.3220522)
+Status 200:    39101
+Status 303:    7
+
+RPS: 640.6 (requests/second)
+Max: 113ms
+Min: 13ms
+Avg: 26.4ms
+
+  50%   below 27ms
+  60%   below 28ms
+  70%   below 29ms
+  80%   below 29ms
+  90%   below 30ms
+  95%   below 31ms
+  98%   below 34ms
+  99%   below 38ms
+99.9%   below 72ms
+
+PS E:\Book\训练营\week2\day03> sb -u http://localhost:8808/test -c 20 -N 60
+Starting at 2020/10/27 8:40:28
+[Press C to stop the test]
+372229  (RPS: 5797.8)
+---------------Finished!----------------
+Finished at 2020/10/27 8:41:32 (took 00:01:04.4027045)
+Status 200:    372238
+
+RPS: 6081.2 (requests/second)
+Max: 98ms
+Min: 0ms
+Avg: 0ms
+
+  50%   below 0ms
+  60%   below 0ms
+  70%   below 0ms
+  80%   below 0ms
+  90%   below 0ms
+  95%   below 0ms
+  98%   below 0ms
+  99%   below 2ms
+99.9%   below 3ms
+```
+
+
+
+
+
+**题目6：**
 
 写一段代码，使用 HttpClient 或 OkHttp 访问 http://localhost:8801，代码提交到
 Github  
