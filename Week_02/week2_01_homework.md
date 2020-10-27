@@ -1,4 +1,4 @@
-**week2-01-题目1：**
+**题目1：**
 
 使用 GCLogAnalysis.java 自己演练一遍串行/并行/CMS/G1的案例。   
 
@@ -391,7 +391,7 @@ CommandLine flags: -XX:InitialHeapSize=4294967296 -XX:MaxHeapSize=4294967296 -XX
 
 
 
-**week2-01-题目2：**
+**题目2：**
 
 使用压测工具（wrk或sb），演练gateway-server-0.0.1-SNAPSHOT.jar 示例  
 
@@ -424,15 +424,15 @@ Avg: 0.1ms
 
 > 程序启动参数为：` java -jar -Xmx1g -Xms1g .\gateway-server-0.0.1-SNAPSHOT.jar`。依据上面的数据可得，吞吐量为6914每秒，最大延迟为79ms，最低为0ms，平均0.1ms。再次压测，分别用**jvisualvm**和**jmc**工具对压测过程中内存使用和GC情况进行监控统计。
 
-![jvisualvm](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/gateway-jvisualvm.png)
+![jvisualvm](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/pics/gateway-jvisualvm.png)
 
 > 上述图为**jvisualvm**工具监控内存做的数据统计，每次波峰到波谷的跳变，即发生一次GC，图中总共发生27次GC。
 
-![gateway-jmc1](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/gateway-jmc1.PNG)
+![gateway-jmc1](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/pics/gateway-jmc1.PNG)
 
-![gateway-jmc2](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/gateway-jmc2.PNG)
+![gateway-jmc2](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/pics/gateway-jmc2.PNG)
 
-![gateway-jmc3](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/gateway-jmc3.PNG)
+![gateway-jmc3](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/pics/gateway-jmc3.PNG)
 
 > 上述三张图为**jmc**工具监控的数据统计，利用了它的飞行器功能，统计1分钟内程序运行中发生的情况。可以简要看出整个压测过程中，堆平均使用187MB，最大使用356MB，CPU平均使用63.8%，最大使用99.6%，GC暂停时间平均2ms608us，最大3ms990us；程序运行的PC运行的线程数为4*8=32，物理内存为16GB，默认情况下，GC线程为CPU的1/4，即为8；默认heap的大小为总内存的1/4，即4GB，而由于程序启动时指定了堆大小1GB，所以统计显示的是1GB，java8默认使用的垃圾收集器为并行收集器，与统计信息相符合。
 >
@@ -504,7 +504,7 @@ Avg: 0.2ms
 
 
 
-**week2-01-题目3：**
+**题目3：**
 
 如果自己本地有可以运行的项目，可以按照2的方式进行演练  
 
@@ -537,19 +537,19 @@ Avg: 3.6ms
 
 程序启动参数为：` java -jar -Xms1g -Xmx1g .\newbee-mall-1.0.0-SNAPSHOT.jar`。依据上面的数据可得，吞吐量为2676每秒，最大延迟为136ms，最低为0ms，平均3.6ms。接着分别用**jvisualvm**和**jmc**工具对压测过程中内存使用和GC情况进行监控统计。
 
-![mall-jvisualvm](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/mall-jvisualvm.PNG)
+![mall-jvisualvm](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/pics/mall-jvisualvm.PNG)
 
 > 上述图为**jvisualvm**工具监控内存做的数据统计，压测时间[8:01:36, 8:02:40]每次波峰到波谷的跳变，即发生一次GC，图中总共发生21次GC。
 
-![mall-jmc1](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/mall-jmc1.PNG)
+![mall-jmc1](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/pics/mall-jmc1.PNG)
 
-![mall-jmc2](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/mall-jmc2.PNG)
+![mall-jmc2](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/pics/mall-jmc2.PNG)
 
 > 上述两张图为**jmc**工具监控的数据统计，统计1分钟内程序运行中发生的情况。可以简要看出整个压测过程中，堆平均使用410MB，最大使用614MB，CPU平均使用81.2%，最大使用100%，GC暂停时间平均18ms537us，最大35ms332us；初始堆大小和最大堆大小为1GB，使用的垃圾收集器为并行收集器，共发生了72次GC，这里能看到最短暂停7ms811us。
 
 
 
-**week2-01-思考题：**
+**思考题：**
 
 根据上述自己对于1和2的演示，写一段对于不同 GC 的总结，提交到 Github。  
 
