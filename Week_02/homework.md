@@ -391,8 +391,6 @@ CommandLine flags: -XX:InitialHeapSize=4294967296 -XX:MaxHeapSize=4294967296 -XX
 
 
 
-
-
 **week2-01-题目2：**
 
 使用压测工具（wrk或sb），演练gateway-server-0.0.1-SNAPSHOT.jar 示例  
@@ -437,6 +435,8 @@ Avg: 0.1ms
 ![gateway-jmc3](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/gateway-jmc3.PNG)
 
 > 上述三张图为**jmc**工具监控的数据统计，利用了它的飞行器功能，统计1分钟内程序运行中发生的情况。可以简要看出整个压测过程中，堆平均使用187MB，最大使用356MB，CPU平均使用63.8%，最大使用99.6%，GC暂停时间平均2ms608us，最大3ms990us；程序运行的PC运行的线程数为4*8=32，物理内存为16GB，默认情况下，GC线程为CPU的1/4，即为8；默认heap的大小为总内存的1/4，即4GB，而由于程序启动时指定了堆大小1GB，所以统计显示的是1GB，java8默认使用的垃圾收集器为并行收集器，与统计信息相符合。
+>
+> 另外针对相同堆大小，使用CMS和G1 GC策略进行压测，其吞吐量都低于并行GC。
 
 ```java
 PS E:\Book\训练营\week2\day03> jmap -heap 16980
@@ -448,6 +448,58 @@ JVM version is 25.191-b12
 using thread-local object allocation.
 Parallel GC with 8 thread(s)
 ...
+```
+
+```java
+PS E:\Book\训练营\week2\day03> java -jar -XX:+UseConcMarkSweepGC -Xmx1g -Xms1g .\gateway-server-0.0.1-SNAPSHOT.jar
+...
+PS E:\Book\训练营\week2\day03> sb -u http://localhost:8088/api/hello -c 20 -N 60
+Starting at 2020/10/27 21:34:30
+[Press C to stop the test]
+412680  (RPS: 6432.7)
+---------------Finished!----------------
+Finished at 2020/10/27 21:35:34 (took 00:01:04.2546510)
+Status 200:    412682
+
+RPS: 6754.3 (requests/second)
+Max: 171ms
+Min: 0ms
+Avg: 0.1ms
+
+  50%   below 0ms
+  60%   below 0ms
+  70%   below 0ms
+  80%   below 0ms
+  90%   below 0ms
+  95%   below 0ms
+  98%   below 2ms
+  99%   below 3ms
+99.9%   below 13ms
+
+PS E:\Book\训练营\week2\day03> java -jar -XX:+UseConcMarkSweepGC -Xmx1g -Xms1g .\gateway-server-0.0.1-SNAPSHOT.jar
+...
+PS E:\Book\训练营\week2\day03> sb -u http://localhost:8088/api/hello -c 20 -N 60
+Starting at 2020/10/27 21:38:12
+[Press C to stop the test]
+408321  (RPS: 6363.1)
+---------------Finished!----------------
+Finished at 2020/10/27 21:39:16 (took 00:01:04.3972834)
+Status 200:    408321
+
+RPS: 6667.4 (requests/second)
+Max: 258ms
+Min: 0ms
+Avg: 0.2ms
+
+  50%   below 0ms
+  60%   below 0ms
+  70%   below 0ms
+  80%   below 0ms
+  90%   below 0ms
+  95%   below 0ms
+  98%   below 2ms
+  99%   below 4ms
+99.9%   below 12ms
 ```
 
 
@@ -502,6 +554,10 @@ Avg: 3.6ms
 根据上述自己对于1和2的演示，写一段对于不同 GC 的总结，提交到 Github。  
 
 **答题如下**：
+
+> 结合题目1，**在堆内存增加的情况下**，串行GC第一次发生GC的时间会延后，年轻代首次分配的大小会增加，单次GC时间会变长，发生GC次数减少；并行GC第一次发生GC的时间会延后，年轻代首次分配的大小会增加，发生GC次数减少；CMS GC第一次发生GC的时间会延后，年轻代首次分配的大小会增加，单次GC时间会变长，发生GC次数减少；G1 GC第一次发生GC的时间变化不大，单次GC时间变长，发生GC次数减少。**在相关内存情况下**，单次GC耗时，G1 GC最短，其次并行GC和CMS GC，耗时最长为串行GC。
+>
+> 结合题目2，可以知道并行GC在吞吐量方面要优于CMS GC和G1 GC
 
 
 
