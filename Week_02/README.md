@@ -312,7 +312,7 @@ Java Socket编程
 
 首先Socket通信模型，包括Server端，Client端
 
-![](D:\java00\week02\socket.PNG)
+![](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/pics/socket-model.PNG)
 
 简单实现Socket编程
 
@@ -383,7 +383,7 @@ IO模型与相关概念
 
 不同IO模型与同步，异步，阻塞，非阻塞的关系
 
-![](D:\java00\week02\IO_model.PNG)
+![](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/pics/io-model.PNG)
 
 > **IO模型1**
 
@@ -476,4 +476,4 @@ Netty中核心类及概念
 
 [一个Java对象到底占用多大内存？](https://juejin.im/post/6844904022101475342)
 
-[netty](https://netty.io/wiki/user-guide-for-4.x.html)
+[Netty](https://netty.io/wiki/user-guide-for-4.x.html)
