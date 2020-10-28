@@ -424,7 +424,7 @@ Netty框架简介
 
 Netty网络应用开发框架
 
-![](D:\java00\week02\netty.PNG)
+![](https://github.com/Rookie45/JAVA-000/blob/main/Week_02/pics/netty-arch.PNG)
 
 设计原理：
 
