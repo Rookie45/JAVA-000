@@ -47,7 +47,6 @@ GC日志解读与分析
 > 老年代使用ParOld（Parallel Old）收集器，使用空间从315346KB减少到272215KB，总的老年代可用内存为349696KB，总的堆已使用内存从344158KB减少到272215KB，总的堆内存为466432KB，总的GC耗时约66.4ms
 
 
-
 **CMS GC，通过`-XX:+UseConcMarkSweepGC`参数开启**
 
 ```java
@@ -124,6 +123,8 @@ CMS收集器在老年代内存使用到一定程度时就触发垃圾回收，�
 > 阶段6，并发清除`concurrent-cleanup`，与业务线程并发执行，用于收尾阶段5的工作，耗时0.035ms
 
 G1 GC设计的目标是，将STW暂停时间和分布，变为可预期和可配置；首先堆不再分年轻代和老年代，而是划分为多个可存放对象的region，每个region可能定义为Eden区，也可能被定义为Survivor区，所有的Eden区+Survivor区合起来称为年轻代；G1每次回收时，只处理部分内存块，称为Collection Set，每次GC STW都会收集所有年轻代和部分老年代内存情况；在并发阶段增加了估算每个region存活对象的总数，垃圾最多的region优先收集。
+
+G1是为了大堆设计，至少需要6GB；默认的并行GC线程数ParallelGCThread，在8核及以下的机器是CPU数量，超过8核则是CPU数量的5/8，并发标记线程数ConcGCThreads是ParallelGCThread的1/4。
 
 JVM 线程堆栈数据分析  
 ===
@@ -348,6 +349,8 @@ Java Socket编程
         }
     }
 ```
+
+线程池的大小，根据用于CPU计算型还是I/O型，CPU计算型一般可设置为CPU核心数+1，I/O型可设置为CPU核数\*CPU利用率\*(1 + 等待时间/计算时间)
 
 可通过SuperBenchmarker压测工具对实现的通信进行吞吐量性能的测试。
 
