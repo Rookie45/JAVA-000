@@ -136,4 +136,13 @@ public class OkhttpOutboundHandler {
 
 ```
 
-hello
+参考：
+
+[java进阶训练营]()
+
+[基于Netty4的HttpServer和HttpClient的简单实现](https://www.cnblogs.com/luxiaoxun/p/3959450.html)
+
+[netty-gateway](https://github.com/pjmike/netty-gateway)
+
+[netty-http-client](https://github.com/timboudreau/netty-http-client)
+
