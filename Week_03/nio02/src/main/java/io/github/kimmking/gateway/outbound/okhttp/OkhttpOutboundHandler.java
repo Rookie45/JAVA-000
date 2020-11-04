@@ -17,6 +17,10 @@ import okhttp3.Response;
 import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionHandler;
@@ -42,21 +46,33 @@ public class OkhttpOutboundHandler {
         int queueSize = 2048;
         RejectedExecutionHandler handler = new ThreadPoolExecutor.CallerRunsPolicy();
         //初始化线程池
-        proxyService = new ThreadPoolExecutor(cores, cores,
+        this.proxyService = new ThreadPoolExecutor(cores, cores,
                 keepAliveTime, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(queueSize),
                 new NamedThreadFactory("proxyService"), handler);
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public void handle(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx) {
         final String url = this.url + fullRequest.uri();
+        System.out.println("proxy service:"+url);
         proxyService.submit(() -> httpGet(fullRequest, ctx, url));
     }
 
-    private void httpGet(FullHttpRequest fullRequest, ChannelHandlerContext ctx, String url) {
-        Request request = new Request.Builder()
-                .url(url)
+    private void httpGet(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx, final String url) {
+        Request.Builder builder = new Request.Builder().url(url);
+        //请求gateway的header全部拷贝到endpoint的请求里
+        for (Map.Entry<String, String> header : fullRequest.headers()) {
+            builder.addHeader(header.getKey(), header.getValue());
+        }
+        Request request = builder.get()
                 .addHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_KEEP_ALIVE)
-                .get()
                 .build();
         try (Response response = this.httpClient.newCall(request).execute()) {
             handleResponse(fullRequest, ctx, response);
@@ -66,7 +82,7 @@ public class OkhttpOutboundHandler {
     }
 
     private void handleResponse(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx,
-                                final Response endpointResponse) {
+                                Response endpointResponse) {
         FullHttpResponse response = null;
 
         try {
@@ -76,7 +92,7 @@ public class OkhttpOutboundHandler {
             Headers responseHeaders = endpointResponse.headers();
             response.headers().setInt("Content-Length", Integer.parseInt(responseHeaders.get("Content-Length")));
             //header里塞自定义的key-value
-            response.headers().set("nio", fullRequest.headers().get("nio"));
+            response.headers().add("nio", fullRequest.headers().get("nio"));
             //将endpoint返回的header信息塞到代理的response对象里
             for (int i = 0; i < responseHeaders.size(); i++) {
                 response.headers().set(responseHeaders.name(i), responseHeaders.value(i));
@@ -97,7 +113,7 @@ public class OkhttpOutboundHandler {
         }
     }
 
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+    private void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         cause.printStackTrace();
         ctx.close();
     }

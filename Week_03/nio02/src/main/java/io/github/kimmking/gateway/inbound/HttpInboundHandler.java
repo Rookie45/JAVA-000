@@ -1,10 +1,13 @@
 package io.github.kimmking.gateway.inbound;
 
 import io.github.kimmking.gateway.filter.HttpRequestFilter;
-import io.github.kimmking.gateway.filter.HttpRequestFilterImpl;
+import io.github.kimmking.gateway.filter.PreHttpRequestFilter;
+import io.github.kimmking.gateway.outbound.httpclient.HttpclientOutboundHandler;
 import io.github.kimmking.gateway.outbound.httpclient4.HttpOutboundHandler;
-import io.github.kimmking.gateway.outbound.netty4.NettyHttpClientOutboundHandler;
+import io.github.kimmking.gateway.outbound.netty4.NettyHttpClient;
 import io.github.kimmking.gateway.outbound.okhttp.OkhttpOutboundHandler;
+import io.github.kimmking.gateway.router.HttpEndpointRouter;
+import io.github.kimmking.gateway.router.RibbonHttpEndpointRouter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -12,23 +15,47 @@ import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(HttpInboundHandler.class);
+
     private final String proxyServer;
+    private final List<String> proxyServers;
+
     private HttpOutboundHandler handler;
     private OkhttpOutboundHandler okhttpHandler;
+    private HttpclientOutboundHandler httpclientHandler;
+    private NettyHttpClient client;
     private HttpRequestFilter requestFilter;
-//    private NettyHttpClient client;
-
-    //此处加上自己定义的okhttpoutboundhandler，41行调用自己定义的handler
+    private HttpEndpointRouter endpointRouter;
 
     public HttpInboundHandler(String proxyServer) {
         this.proxyServer = proxyServer;
+        this.proxyServers = Arrays.asList(proxyServer);
+
+        requestFilter = new PreHttpRequestFilter();
+        endpointRouter = new RibbonHttpEndpointRouter();
+
         handler = new HttpOutboundHandler(this.proxyServer);
         okhttpHandler = new OkhttpOutboundHandler(this.proxyServer);
-        requestFilter = new HttpRequestFilterImpl();
-//        client = new NettyHttpClient(this.proxyServer);
+        httpclientHandler = new HttpclientOutboundHandler(this.proxyServer);
+        client = new NettyHttpClient(this.proxyServer);
+    }
+
+    public HttpInboundHandler(List<String> proxyServers) {
+        this.proxyServer = proxyServers.get(0);
+        this.proxyServers = proxyServers;
+
+        requestFilter = new PreHttpRequestFilter();
+        endpointRouter = new RibbonHttpEndpointRouter();
+
+        handler = new HttpOutboundHandler(endpointRouter.route(proxyServers));
+        okhttpHandler = new OkhttpOutboundHandler(endpointRouter.route(proxyServers));
+        httpclientHandler = new HttpclientOutboundHandler(endpointRouter.route(proxyServers));
+        client = new NettyHttpClient(endpointRouter.route(proxyServers));
     }
 
     @Override
@@ -49,10 +76,13 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
 
             //pre filter
             requestFilter.filter(fullRequest, ctx);
-            okhttpHandler.handle(fullRequest,ctx);
+
+            okhttpHandler.setUrl(endpointRouter.route(this.proxyServers));
+//            client.setUrl(endpointRouter.route(this.proxyServers));
 //            handler.handle(fullRequest, ctx);
-//            client.connect("localhost", 8088);
-            //post filter
+            okhttpHandler.handle(fullRequest,ctx);
+//            httpclientHandler.handle(fullRequest,ctx);
+//            client.connect(fullRequest, ctx);
 
         } catch (Exception e) {
             e.printStackTrace();

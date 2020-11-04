@@ -13,17 +13,29 @@ import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 public class HttpInboundServer {
     private static Logger logger = LoggerFactory.getLogger(HttpInboundServer.class);
 
     private int port;
-    
+
     private String proxyServer;
 
+    private List<String> proxyServers;
+
     public HttpInboundServer(int port, String proxyServer) {
-        this.port=port;
+        this.port = port;
         this.proxyServer = proxyServer;
+        this.proxyServers = Arrays.asList(proxyServer);
+    }
+
+    public HttpInboundServer(int port, List<String> proxyServers) {
+        this.port = port;
+        this.proxyServer = proxyServers.get(0);
+        this.proxyServers = proxyServers;
     }
 
     public void run() throws Exception {
@@ -44,7 +56,8 @@ public class HttpInboundServer {
                     .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
 
             b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-                    .handler(new LoggingHandler(LogLevel.INFO)).childHandler(new HttpInboundInitializer(this.proxyServer));
+                    .handler(new LoggingHandler(LogLevel.INFO)).childHandler(new HttpInboundInitializer(this.proxyServers));
+//            .handler(new LoggingHandler(LogLevel.INFO)).childHandler(new HttpInboundInitializer(this.proxyServer))
 
             Channel ch = b.bind(port).sync().channel();
             logger.info("开启netty http服务器，监听地址和端口为 http://127.0.0.1:" + port + '/');
