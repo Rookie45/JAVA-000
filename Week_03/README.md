@@ -1,148 +1,46 @@
 学习笔记
 
-```java
-package io.github.kimmking.gateway.outbound.okhttp;
+多线程基础
+===
 
-import io.github.kimmking.gateway.outbound.httpclient4.NamedThreadFactory;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpUtil;
-import io.netty.handler.codec.http.HttpVersion;
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.apache.http.protocol.HTTP;
 
-import java.io.IOException;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
-public class OkhttpOutboundHandler {
 
-    private String url;
-    private OkHttpClient httpClient;
-    private ExecutorService proxyService;
 
-    public OkhttpOutboundHandler(String url) {
-        //去掉url末尾的"/"
-        this.url = url.endsWith("/") ? url.substring(0, url.length() - 1) : url;
-        //同步的httpclient
-        this.httpClient = new OkHttpClient.Builder()
-                .connectTimeout(5L, TimeUnit.SECONDS)
-                .readTimeout(5L, TimeUnit.SECONDS)
-                .build();
-        int cores = Runtime.getRuntime().availableProcessors() * 2;
-        long keepAliveTime = 1000;
-        int queueSize = 2048;
-        RejectedExecutionHandler handler = new ThreadPoolExecutor.CallerRunsPolicy();
-        //初始化线程池
-        proxyService = new ThreadPoolExecutor(cores, cores,
-                keepAliveTime, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(queueSize),
-                new NamedThreadFactory("proxyService"), handler);
-    }
+java多线程
+====
 
-    public void handle(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx) {
-        final String url = this.url + fullRequest.uri();
-        proxyService.submit(() -> httpGet(fullRequest, ctx, url));
-    }
+守护线程属于后台线程，一般Thread对象的setDaemon(true)方法设置当先调用线程为守护线程。
 
-    private void httpGet(FullHttpRequest fullRequest, ChannelHandlerContext ctx, String url) {
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_KEEP_ALIVE)
-                .get()
-                .build();
-        try (Response response = this.httpClient.newCall(request).execute()) {
-            handleResponse(fullRequest, ctx, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+注意项：
 
-    private void handleResponse(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx,
-                                final Response endpointResponse) {
-        FullHttpResponse response = null;
+- 如果用户线程已经全部退出运行了，只剩下守护线程存在了，虚拟机也就退出了。 因为没有了被守护者，守护线程也就没有工作可做了，也就没有继续运行程序的必要了。
+- 在Daemon线程中产生的新线程也是Daemon的。
+- 守护线程不能持有任何需要关闭的资源，例如打开文件等，因为虚拟机退出时，守护线程没有任何机会来关闭文件，这会导致数据丢失。
 
-        try {
-            byte[] body = endpointResponse.body().bytes();
-            response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK,
-                    Unpooled.wrappedBuffer(body));
-            Headers responseHeaders = endpointResponse.headers();
-            response.headers().setInt("Content-Length", Integer.parseInt(responseHeaders.get("Content-Length")));
-            //header里塞自定义的key-value
-            response.headers().set("nio", "shili");
-            //将endpoint返回的header信息塞到代理的response对象里
-            for (int i = 0; i < responseHeaders.size(); i++) {
-                response.headers().set(responseHeaders.name(i), responseHeaders.value(i));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.NO_CONTENT);
-            exceptionCaught(ctx, e);
-        } finally {
-            if (fullRequest != null) {
-                if (!HttpUtil.isKeepAlive(fullRequest)) {
-                    ctx.write(response).addListener(ChannelFutureListener.CLOSE);
-                } else {
-                    ctx.write(response);
-                }
-            }
-            ctx.flush();
-        }
-    }
+| Thread类的重要方法                 | 说明 |
+| ------------------------- | ---- |
+| synchronized void start() |  【协作】启动新线程并自动执行    |
+|void join()|【协作】等待某个线程执行完毕（来汇合|
+|static native Thread currentThread();|静态方法: 获取当前线程信息|
+|static native void sleep(long millis);|静态方法: 线程睡眠并让出CPU时间片|
 
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
-        ctx.close();
-    }
 
-//    public String httpGet(String url) {
-//        String response = null;
-//        if (null == url) {
-//            return response;
-//        }
-//        Request request = new Request.Builder()
-//                .url(url)
-//                .get()
-//                .build();
-//        response = execute(request);
-//        return response;
-//    }
+Thread 的状态改变操作  
 
-//    private String execute(Request request) {
-//        String responseResult = null;
-//        try (Response response = this.httpClient.newCall(request).execute()){
-//            if (null == response) {
-//                return responseResult;
-//            }
-//            if (response.isSuccessful() && null != response.body()) {
-//                responseResult =response.body().string();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return responseResult;
-//    }
-}
+1. Thread.sleep(long millis)，一定是当前线程调用此方法，当前线程进入 TIMED_WAITING 状态，但不释放对象锁，millis 后线程自动苏醒进入就绪状态。作用：给其它线程执行机会的最佳方式。
+2. Thread.yield()，一定是当前线程调用此方法，当前线程放弃获取的 CPU 时间片，但不释放锁资源，由运行状态变为就绪状态，让 OS 再次选择线程。作用：让相同优先级的线程轮流执行，但并不保证一定会轮流执行。实际中无法保证yield() 达到让步目的，因为让步的线程还有可能被线程调度程序再次选中。Thread.yield() 不会导致阻塞。该方法与sleep() 类似，只是不能由用户指定暂停多长时间。
+3. t.join()/t.join(long millis)，当前线程里调用其它线程 t 的 join 方法，当前线程进入WAITING/TIMED_WAITING 状态，当前线程不会释放已经持有的对象锁。线程t执行完毕或者 millis 时间到，当前线程进入就绪状态。
+4.  obj.wait()，当前线程调用对象的 wait() 方法，当前线程释放对象锁，进入等待队列。依靠 notify()/notifyAll() 唤醒或者 wait(long timeout) timeout 时间到自动唤醒。
+5. obj.notify() 唤醒在此对象监视器上等待的单个线程，选择是任意性的。notifyAll() 唤醒在此对象监视器上等待的所有线程  
 
-```
+
 
 参考：
 
-[java进阶训练营]()
-
-[基于Netty4的HttpServer和HttpClient的简单实现](https://www.cnblogs.com/luxiaoxun/p/3959450.html)
+[java进阶训练营](https://u.geekbang.org/subject/java/1000579?utm_source=u_list_web&utm_medium=u_list_web&utm_term=u_list_web)
 
 [netty-gateway](https://github.com/pjmike/netty-gateway)
 
-[netty-http-client](https://github.com/timboudreau/netty-http-client)
+
 
