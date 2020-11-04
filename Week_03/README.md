@@ -1,8 +1,28 @@
 学习笔记
 
-多线程基础
+
+什么是高性能
 ===
 
+
+
+Netty如何实现高性能
+===
+
+
+
+Netty网络程序优化
+===
+
+
+
+典型应用：API网关
+===
+
+
+
+多线程基础
+===
 
 
 
@@ -35,12 +55,13 @@ Thread 的状态改变操作
 5. obj.notify() 唤醒在此对象监视器上等待的单个线程，选择是任意性的。notifyAll() 唤醒在此对象监视器上等待的所有线程  
 
 
+线程池原理与应用
+===
 
 参考：
 
 [java进阶训练营](https://u.geekbang.org/subject/java/1000579?utm_source=u_list_web&utm_medium=u_list_web&utm_term=u_list_web)
 
-[netty-gateway](https://github.com/pjmike/netty-gateway)
 
 
 
