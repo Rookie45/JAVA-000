@@ -79,7 +79,7 @@
 4、把多线程和并发相关知识带你梳理一遍，画一个脑图，截图上传到github上。
 
 **答题如下：**
-
+![](https://github.com/Rookie45/JAVA-000/blob/main/Week_04/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91.png)
 
 
 **参考：**
