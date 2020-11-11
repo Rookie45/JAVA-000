@@ -155,31 +155,39 @@ LongAdder 对 AtomicLong 的改进，改进思路为：AtomicInteger和AtomicLon
 1. 准入数量 N
 2. N =1 则等价于独占锁
 
-CountdownLatch
+**CountdownLatch**
 
 场景: Master 线程等待 Worker 线程把任务执行完
 
-重要方法|说明
+|重要方法|说明|
+|  ----  | ----  |
+|public CountDownLatch(int count)| 构造方法（总数）|
+|void await() throws InterruptedException |等待数量归0|
+|boolean await(long timeout, TimeUnit unit)| 限时等待|
+|void countDown()| 等待数减1|
+|long getCount()| 返回剩余数量|
 
-public CountDownLatch(int count) 构造方法（总数）
-void await() throws InterruptedException 等待数量归0
-boolean await(long timeout, TimeUnit unit) 限时等待
-void countDown() 等待数减1
-long getCount() 返回剩余数量
-
-CyclicBarrier
+**CyclicBarrier**
 
 场景: 任务执行到一定阶段, 等待其他任务对齐。
 
-重要方法|说明
-
-CyclicBarrier(int parties) 构造方法（需要等待的数量）
-public CyclicBarrier(int parties, Runnable barrierAction) 构造方法（需要等待的数量, 需要执行的任务）
-int await() 任务内部使用; 等待大家都到齐
-int await(long timeout, TimeUnit unit) 任务内部使用; 限时等待到齐
-void reset() 重新一轮
+|重要方法|说明|
+|  ----  | ----  |
+|CyclicBarrier(int parties) |构造方法（需要等待的数量）|
+|public CyclicBarrier(int parties, Runnable barrierAction) |构造方法（需要等待的数量, 需要执行的任务）|
+|int await()| 任务内部使用; 等待大家都到齐|
+|int await(long timeout, TimeUnit unit) |任务内部使用; 限时等待到齐|
+|void reset()| 重新一轮|
 
 CountdownLatch与CyclicBarrier比较
+
+| CountDownLatch                                               | CyclicBarrier                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 减计数方式                                                   | 加计数方式                                                   |
+| 计算为0时释放所有等待的线程                                  | 计数达到指定值时释放所有等待线程                             |
+| 计数为0时，无法重置                                          | 计数达到指定值时，计数置为0重新开始                          |
+| 调用countDown()方法计数减一，调用await()方法只进行阻塞，对计数没任何影响 | 调用await()方法计数加1，若加1后的值不等于构造方法的值，则线程阻塞 |
+| 不可重复利用                                                 | 可重复利用                                                   |
 
 Future/FutureTask/CompletableFuture
 
