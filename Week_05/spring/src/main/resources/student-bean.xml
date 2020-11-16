@@ -4,25 +4,25 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="student-by-constructor" class="com.sl.java00.week05.lesson09.bean.Student">
+    <bean id="student-by-constructor" class="com.sl.homework.lesson09.spring.bean.Student">
         <constructor-arg name="id" value="2"/>
         <constructor-arg name="name" value="shili"/>
     </bean>
 
-    <bean id="student-by-setter" class="com.sl.java00.week05.lesson09.bean.Student">
+    <bean id="student-by-setter" class="com.sl.homework.lesson09.spring.bean.Student">
         <property name="id" value="2"/>
         <property name="name" value="shili"/>
     </bean>
 
-    <bean id="student-by-static-method" class="com.sl.java00.week05.lesson09.bean.Student"
-     factory-method="createByStatic"/>
+    <bean id="student-by-static-method" class="com.sl.homework.lesson09.spring.bean.Student"
+          factory-method="createByStatic"/>
 
     <bean id="student-by-instance-method" factory-bean="studentFactory" factory-method="create"/>
-    <bean id="studentFactory" class="com.sl.java00.week05.lesson09.bean.DefaultStudentFactory"/>
+    <bean id="studentFactory" class="com.sl.homework.lesson09.spring.bean.DefaultStudentFactory"/>
 
-    <bean id="student-by-factory-bean" class="com.sl.java00.week05.lesson09.bean.StudentFactoryBean"/>
+    <bean id="student-by-factory-bean" class="com.sl.homework.lesson09.spring.bean.StudentFactoryBean"/>
 
     <!--<bean id="student-by-service-loader" class="org.springframework.beans.factory.serviceloader.ServiceFactoryBean">-->
-        <!--<property name="serviceType" value="com.sl.java00.week05.lesson09.bean.StudentFactory"/>-->
-     <!--</bean>-->
+    <!--<property name="serviceType" value="com.sl.java00.week05.lesson09.bean.StudentFactory"/>-->
+    <!--</bean>-->
 </beans>

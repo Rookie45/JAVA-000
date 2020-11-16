@@ -1,4 +1,4 @@
-package com.sl.java00.week05.lesson09.bean;
+package com.sl.homework.lesson09.spring.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,20 +7,19 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class Student implements Serializable {
-    
+
     private int id;
     private String name;
-    
+
     public void init(){
         System.out.println("hello...........");
     }
-    
+
     public Student create(){
         return new Student(2,"shili");
     }

@@ -1,4 +1,4 @@
-package com.sl.java00.week05.lesson09.bean;
+package com.sl.homework.lesson09.spring.bean;
 
 public interface StudentFactory {
     default Student create(){

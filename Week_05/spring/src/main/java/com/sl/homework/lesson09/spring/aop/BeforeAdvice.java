@@ -1,4 +1,4 @@
-package com.sl.java00.week05.lesson09.proxy;
+package com.sl.homework.lesson09.spring.aop;
 
 public interface BeforeAdvice {
     void before();
