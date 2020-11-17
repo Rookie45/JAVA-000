@@ -1,4 +1,4 @@
-CREATE TABLE `tb_student` (
+CREATE TABLE IF NOT EXISTS `tb_student` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
