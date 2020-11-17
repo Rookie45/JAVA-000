@@ -1,3 +1,4 @@
+**题目**
 1. （选做）总结一下，单例的各种写法，比较它们的优劣。
 
 2. （选做）maven/spring的profile机制，都有什么用法？
@@ -12,3 +13,8 @@
    1）使用JDBC原生接口，实现数据库的增删改查操作。
    2）使用事务，PrepareStatement方式，批处理方式，改进上述操作。
    3）配置Hikari连接池，改进上述操作。提交代码到Github  
+   
+   
+**参考**
+
+[Using Transactions](https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html)
