@@ -1,3 +1,5 @@
+package com.sl.java00.springboot.homework.lesson10.singleton;
+
 //线程安全，调用效率不高，但是能延时加载
 public class SingletonDemo2 {
      
