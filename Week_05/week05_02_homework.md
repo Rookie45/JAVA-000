@@ -3,7 +3,7 @@
 
 **答题如下**
 
-[singleton]()
+[singleton](https://github.com/Rookie45/JAVA-000/tree/main/Week_05/springboot/src/main/java/com/sl/java00/springboot/homework/lesson10/singleton)
 
 **题目**
 
@@ -16,7 +16,7 @@
 3. 给前面课程提供的Student/Klass/School实现自动配置和Starter。
 
 **答题如下**
-[custom-springboot-starter]()
+[custom-springboot-starter](https://github.com/Rookie45/JAVA-000/tree/main/Week_05/custom-springboot-starter)
 
 **题目**
 
@@ -26,10 +26,16 @@
 
 - Mybatis
   - 优点：原生SQL（XML语法），直观，对DBA友好
-  - 缺点：繁琐，可以用MyBatis-generator、MyBatis-Plus之类的插件
+  - 缺点：繁琐，可以用MyBatis-generator、MyBatis-Plus之类的插件弥补
 - Hibernate
   - 优点：简单场景不用写SQL（HQL、Cretiria、SQL）
   - 缺点：对DBA不友好 
+其他比较：
+1. hibernate是全自动，而mybatis是半自动。
+2. hibernate数据库移植性远大于mybatis。
+3. hibernate拥有完整的日志系统，mybatis则欠缺一些。
+4. mybatis相比hibernate需要关心很多细节
+5. sql直接优化上，mybatis要比hibernate方便很多
 
 **题目**
 
@@ -46,7 +52,7 @@
 
 **答题如下**
 
-[jdbc]()
+[jdbc](https://github.com/Rookie45/JAVA-000/tree/main/Week_05/springboot/src/main/java/com/sl/java00/springboot/homework/lesson10/jdbc)
 
 **参考**
 
@@ -61,3 +67,5 @@
 [springboot 自定义starter的过程以及遇到的问题](https://www.codenong.com/jsc63b8d1dead8/)
 
 [单例模式几种实现方式](https://www.cnblogs.com/ngy0217/p/9006716.html)
+
+[mybatis与hibernate区别](https://blog.csdn.net/wangpeng047/article/details/17038659)
