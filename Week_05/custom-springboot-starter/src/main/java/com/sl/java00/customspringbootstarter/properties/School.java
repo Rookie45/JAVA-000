@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 
 @Data
 @NoArgsConstructor
-@ConfigurationProperties(prefix = "custom.school")
+@ConfigurationProperties(prefix = "school")
 @Component
 public class School implements ISchool {
     
@@ -18,7 +18,7 @@ public class School implements ISchool {
     @Autowired(required = true) //primary
     Klass class1;
     
-    @Resource(name = "student100")
+    @Resource(name = "student")
     Student student100;
     
     @Override
