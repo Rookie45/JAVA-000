@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ConfigurationProperties(prefix = "custom.klass")
+@ConfigurationProperties(prefix = "klass")
 public class Klass { 
     
     List<Student> students;
