@@ -16,6 +16,7 @@
 3. 给前面课程提供的Student/Klass/School实现自动配置和Starter。
 
 **答题如下**
+[custom-springboot-starter]()
 
 **题目**
 
@@ -23,10 +24,12 @@
 
 **答题如下**
 
-Mybatis优点：原生SQL（XML语法），直观，对DBA友好
-Hibernate优点：简单场景不用写SQL（HQL、Cretiria、SQL）
-Mybatis缺点：繁琐，可以用MyBatis-generator、MyBatis-Plus之类的插件
-Hibernate缺点：对DBA不友好  
+- Mybatis
+  - 优点：原生SQL（XML语法），直观，对DBA友好
+  - 缺点：繁琐，可以用MyBatis-generator、MyBatis-Plus之类的插件
+- Hibernate
+  - 优点：简单场景不用写SQL（HQL、Cretiria、SQL）
+  - 缺点：对DBA不友好 
 
 **题目**
 
@@ -54,5 +57,7 @@ Hibernate缺点：对DBA不友好
 [Configuration Metadata](https://docs.spring.io/spring-boot/docs/2.1.7.RELEASE/reference/html/configuration-metadata.html#configuration-metadata-format)
 
 [springboot之additional-spring-configuration-metadata.json自定义提示](https://www.cnblogs.com/Purgeyao/p/11439555.html)
+
+[springboot 自定义starter的过程以及遇到的问题](https://www.codenong.com/jsc63b8d1dead8/)
 
 [单例模式几种实现方式](https://www.cnblogs.com/ngy0217/p/9006716.html)
