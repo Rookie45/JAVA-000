@@ -49,6 +49,8 @@ spring的profile用于指定程序运行时使用哪个application配置文件�
 
 **答题如下**
 
+[handler](https://github.com/Rookie45/JAVA-000/tree/main/Week_05/springboot/src/main/java/com/sl/java00/springboot/homework/lesson10/handler)
+
 **题目**
 
 6. 研究一下JDBC接口和数据库连接池，掌握它们的设计和用法：
@@ -75,3 +77,7 @@ spring的profile用于指定程序运行时使用哪个application配置文件�
 [单例模式几种实现方式](https://www.cnblogs.com/ngy0217/p/9006716.html)
 
 [mybatis与hibernate区别](https://blog.csdn.net/wangpeng047/article/details/17038659)
+
+[MyBatis GeneratorXML Configuration File Reference](http://mybatis.org/generator/configreference/xmlconfig.html)
+
+[generator-demo](https://github.com/geektime-geekbang/geektime-spring-family/tree/master/Chapter%203/mybatis-generator-demo)
