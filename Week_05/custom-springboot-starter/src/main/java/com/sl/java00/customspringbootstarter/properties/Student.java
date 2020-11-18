@@ -14,8 +14,8 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ConfigurationProperties(prefix = "custom.student")
-@Component(value = "student100")
+@ConfigurationProperties(prefix = "student")
+@Component
 public class Student implements Serializable {
     
     private int id;
