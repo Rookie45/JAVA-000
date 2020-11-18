@@ -11,7 +11,6 @@ import javax.annotation.Resource;
 @Data
 @NoArgsConstructor
 @ConfigurationProperties(prefix = "school")
-@Component
 public class School implements ISchool {
     
     // Resource 
