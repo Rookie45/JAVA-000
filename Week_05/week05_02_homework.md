@@ -16,6 +16,7 @@
 3. 给前面课程提供的Student/Klass/School实现自动配置和Starter。
 
 **答题如下**
+
 [custom-springboot-starter](https://github.com/Rookie45/JAVA-000/tree/main/Week_05/custom-springboot-starter)
 
 **题目**
@@ -30,6 +31,7 @@
 - Hibernate
   - 优点：简单场景不用写SQL（HQL、Cretiria、SQL）
   - 缺点：对DBA不友好 
+  
 其他比较：
 1. hibernate是全自动，而mybatis是半自动。
 2. hibernate数据库移植性远大于mybatis。
