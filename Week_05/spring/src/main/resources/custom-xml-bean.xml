@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:customstudent="https://github.com/Rookie45"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        https://github.com/Rookie45
+        https://github.com/Rookie45/customstudent.xsd">
+    <customstudent:student id="stu10" stuId="10" name="aaa"/>
+</beans>
