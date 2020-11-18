@@ -1,44 +1,54 @@
-{"groups": [
-  {
-    "name": "custom",
-    "type": "org.springframework.boot.autoconfigure.web.ServerProperties",
-    "sourceType": "org.springframework.boot.autoconfigure.web.ServerProperties"
-  }],
+{
+  "groups": [
+    {
+      "name": "student",
+      "type": "com.sl.java00.customspringbootstarter.properties.Student",
+      "sourceType": "com.sl.java00.customspringbootstarter.properties.Student"
+    },
+    {
+      "name": "school",
+      "type": "com.sl.java00.customspringbootstarter.properties.School",
+      "sourceType": "com.sl.java00.customspringbootstarter.properties.School"
+    },
+    {
+      "name": "klass",
+      "type": "com.sl.java00.customspringbootstarter.properties.Klass",
+      "sourceType": "com.sl.java00.customspringbootstarter.properties.Klass"
+    }
+  ],
   "properties": [
-  {
-    "name": "server.port",
-    "type": "java.lang.Integer",
-    "sourceType": "org.springframework.boot.autoconfigure.web.ServerProperties"
-  },
-  {
-    "name": "server.address",
-    "type": "java.net.InetAddress",
-    "sourceType": "org.springframework.boot.autoconfigure.web.ServerProperties"
-  }],
+    {
+      "name": "student.id",
+      "type": "java.lang.Integer",
+      "description": "Student id number.",
+      "sourceType": "com.sl.java00.customspringbootstarter.properties.Student"
+    },
+    {
+      "name": "student.name",
+      "type": "java.lang.String",
+      "description": "Student name.",
+      "sourceType": "com.sl.java00.customspringbootstarter.properties.Student"
+    },
+    {
+      "name": "klass.students",
+      "type": "java.util.List<com.sl.java00.customspringbootstarter.properties.Student>",
+      "description": "The students of a class.",
+      "sourceType": "com.sl.java00.customspringbootstarter.properties.Klass"
+    },
+    {
+      "name": "school.class1",
+      "type": "com.sl.java00.customspringbootstarter.properties.Klass",
+      "description": "The class belong to a school.",
+      "sourceType": "com.sl.java00.customspringbootstarter.properties.School"
+    },
+    {
+      "name": "school.student100",
+      "type": "com.sl.java00.customspringbootstarter.properties.Student",
+      "description": "The student belong to a school.",
+      "sourceType": "com.sl.java00.customspringbootstarter.properties.School"
+    }
+  ],
   "hints": [
-  {
-    "name": "spring.jpa.hibernate.ddl-auto",
-    "values": [
-      {
-        "value": "none",
-        "description": "Disable DDL handling."
-      },
-      {
-        "value": "validate",
-        "description": "Validate the schema, make no changes to the database."
-      },
-      {
-        "value": "update",
-        "description": "Update the schema if necessary."
-      },
-      {
-        "value": "create",
-        "description": "Create the schema and destroy previous data."
-      },
-      {
-        "value": "create-drop",
-        "description": "Create and then destroy the schema at the end of the session."
-      }
-    ]
-  }
-]}
+
+  ]
+}
