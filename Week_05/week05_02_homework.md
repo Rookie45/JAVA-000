@@ -11,6 +11,10 @@
 
 **答题如下**
 
+maven的profile用于打包时，指定使用哪个profile环境进行打包运行，该profile除了在pom.xml配置外，还可以在setting.xml里配置
+
+spring的profile用于指定程序运行时使用哪个application配置文件，比方说test配置，dev配置以及prod配置
+
 **题目**
 
 3. 给前面课程提供的Student/Klass/School实现自动配置和Starter。
