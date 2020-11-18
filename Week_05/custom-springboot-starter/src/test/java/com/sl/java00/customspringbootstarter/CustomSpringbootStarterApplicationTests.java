@@ -1,13 +1,13 @@
 package com.sl.java00.customspringbootstarter;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class CustomSpringbootStarterApplicationTests {
+//@SpringBootTest
+//class CustomSpringbootStarterApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+    //@Test
+    //void contextLoads() {
+    //}
 
-}
+//}
