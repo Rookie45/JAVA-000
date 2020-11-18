@@ -89,7 +89,9 @@ public class CustomJDBC {
             if (resultSet.next()) {
                 int studentId = resultSet.getInt("id");
                 String studentName = resultSet.getString("name");
-                result = new Student(studentId, studentName);
+                result = new Student();
+                result.setId(studentId);
+                result.setName(studentName);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -108,7 +110,9 @@ public class CustomJDBC {
             while (resultSet.next()) {
                 int studentId = resultSet.getInt("id");
                 String studentName = resultSet.getString("name");
-                Student student = new Student(studentId, studentName);
+                Student student = new Student();
+                student.setId(studentId);
+                student.setName(studentName);
                 result.add(student);
             }
             return result;

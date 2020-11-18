@@ -14,14 +14,18 @@ public class SpringbootApplicationTests {
 
     @Test
     public void jdbcInsertTest() {
-        Student student1 = new Student(1, "aaa");
+        Student student1 = new Student();
+        student1.setId(1);
+        student1.setName("aaa");
         CustomJDBC customJDBC = new CustomJDBC();
         customJDBC.insert(student1);
     }
 
     @Test
     public void jdbcUpdateTest() {
-        Student student1 = new Student(1, "bbb");
+        Student student1 = new Student();
+        student1.setId(1);
+        student1.setName("bbb");
         CustomJDBC customJDBC = new CustomJDBC();
         customJDBC.update(student1);
     }
@@ -46,8 +50,12 @@ public class SpringbootApplicationTests {
 
     @Test
     public void jdbcBatchInsertTest() {
-        Student student1 = new Student(1, "aaa");
-        Student student2 = new Student(2, "bbb");
+        Student student1 = new Student();
+        student1.setId(1);
+        student1.setName("aaa");
+        Student student2 = new Student();
+        student2.setId(2);
+        student2.setName("bbb");
         ArrayList<Student> list = new ArrayList<>();
         list.add(student1);
         list.add(student2);
@@ -57,8 +65,12 @@ public class SpringbootApplicationTests {
 
     @Test
     public void jdbcBatchUpdateTest() {
-        Student student1 = new Student(1, "ccc");
-        Student student2 = new Student(2, "ddd");
+        Student student1 = new Student();
+        student1.setId(1);
+        student1.setName("ccc");
+        Student student2 = new Student();
+        student2.setId(2);
+        student2.setName("ddd");
         ArrayList<Student> list = new ArrayList<>();
         list.add(student1);
         list.add(student2);
@@ -68,8 +80,12 @@ public class SpringbootApplicationTests {
 
     @Test
     public void jdbcBatchDeleteTest() {
-        Student student1 = new Student(1, "ccc");
-        Student student2 = new Student(2, "ddd");
+        Student student1 = new Student();
+        student1.setId(1);
+        student1.setName("ccc");
+        Student student2 = new Student();
+        student2.setId(2);
+        student2.setName("ddd");
         ArrayList<Student> list = new ArrayList<>();
         list.add(student1);
         list.add(student2);
@@ -79,7 +95,9 @@ public class SpringbootApplicationTests {
 
     @Test
     public void hikariInsertTest() {
-        Student student1 = new Student(2, "bbb");
+        Student student1 = new Student();
+        student1.setId(2);
+        student1.setName("bbb");
         DataSource dataSource = new CustomHikariConfig().dataSource();
         HikariJDBC hikariJDBC = new HikariJDBC();
         hikariJDBC.setDataSource(dataSource);
@@ -88,7 +106,9 @@ public class SpringbootApplicationTests {
 
     @Test
     public void hikariUpdateTest() {
-        Student student1 = new Student(2, "ccc");
+        Student student1 = new Student();
+        student1.setId(2);
+        student1.setName("ccc");
         DataSource dataSource = new CustomHikariConfig().dataSource();
         HikariJDBC hikariJDBC = new HikariJDBC();
         hikariJDBC.setDataSource(dataSource);

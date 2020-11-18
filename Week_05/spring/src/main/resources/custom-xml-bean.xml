@@ -6,5 +6,6 @@
         https://www.springframework.org/schema/beans/spring-beans.xsd
         https://github.com/Rookie45
         https://github.com/Rookie45/customstudent.xsd">
+
     <customstudent:student id="stu10" stuId="10" name="aaa"/>
 </beans>

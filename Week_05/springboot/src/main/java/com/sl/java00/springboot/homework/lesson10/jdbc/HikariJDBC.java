@@ -78,7 +78,9 @@ public class HikariJDBC {
             if (resultSet.next()) {
                 int studentId = resultSet.getInt("id");
                 String studentName = resultSet.getString("name");
-                result = new Student(studentId, studentName);
+                result = new Student();
+                result.setId(studentId);
+                result.setName(studentName);
             }
         } catch (SQLException e) {
             e.printStackTrace();

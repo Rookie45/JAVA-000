@@ -30,6 +30,7 @@ public class NameTypeHandler extends BaseTypeHandler {
         return parseName(callableStatement.getString(i));
     }
 
+    //自定义类型处理器
     private String parseName(String value) {
         return "spring" + value;
     }
