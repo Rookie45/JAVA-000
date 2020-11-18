@@ -36,6 +36,7 @@ spring的profile用于指定程序运行时使用哪个application配置文件�
   - 优点：简单场景不用写SQL（HQL、Cretiria、SQL）
   - 缺点：对DBA不友好 
   
+
 其他比较：
 1. hibernate是全自动，而mybatis是半自动。
 2. hibernate数据库移植性远大于mybatis。
@@ -63,6 +64,8 @@ spring的profile用于指定程序运行时使用哪个application配置文件�
 [jdbc](https://github.com/Rookie45/JAVA-000/tree/main/Week_05/springboot/src/main/java/com/sl/java00/springboot/homework/lesson10/jdbc)
 
 **参考**
+
+[java进阶训练营](https://u.geekbang.org/subject/java/1000579?utm_source=u_list_web&utm_medium=u_list_web&utm_term=u_list_web)
 
 [Using Transactions](https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html)
 
