@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sl.java00.customspringbootstarter.config.CustomAutoConfiguration
+com.sl.java00.customspringbootstarter.config.CustomAutoConfiguration
