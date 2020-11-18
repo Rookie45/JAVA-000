@@ -1,0 +1,44 @@
+{"groups": [
+  {
+    "name": "custom",
+    "type": "org.springframework.boot.autoconfigure.web.ServerProperties",
+    "sourceType": "org.springframework.boot.autoconfigure.web.ServerProperties"
+  }],
+  "properties": [
+  {
+    "name": "server.port",
+    "type": "java.lang.Integer",
+    "sourceType": "org.springframework.boot.autoconfigure.web.ServerProperties"
+  },
+  {
+    "name": "server.address",
+    "type": "java.net.InetAddress",
+    "sourceType": "org.springframework.boot.autoconfigure.web.ServerProperties"
+  }],
+  "hints": [
+  {
+    "name": "spring.jpa.hibernate.ddl-auto",
+    "values": [
+      {
+        "value": "none",
+        "description": "Disable DDL handling."
+      },
+      {
+        "value": "validate",
+        "description": "Validate the schema, make no changes to the database."
+      },
+      {
+        "value": "update",
+        "description": "Update the schema if necessary."
+      },
+      {
+        "value": "create",
+        "description": "Create the schema and destroy previous data."
+      },
+      {
+        "value": "create-drop",
+        "description": "Create and then destroy the schema at the end of the session."
+      }
+    ]
+  }
+]}

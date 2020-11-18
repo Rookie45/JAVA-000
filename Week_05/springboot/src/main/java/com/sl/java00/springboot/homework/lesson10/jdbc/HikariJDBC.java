@@ -1,6 +1,6 @@
-package com.sl.java00.springboot.homework.custom.jdbc;
+package com.sl.java00.springboot.homework.lesson10.jdbc;
 
-import com.sl.java00.springboot.homework.custom.autoconfig.Student;
+import com.sl.java00.springboot.homework.lesson10.model.Student;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

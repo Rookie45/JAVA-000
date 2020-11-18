@@ -1,6 +1,7 @@
 package com.sl.java00.springboot.homework.lesson10.jdbc;
 
-import com.sl.java00.springboot.homework.custom.autoconfig.Student;
+
+import com.sl.java00.springboot.homework.lesson10.model.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

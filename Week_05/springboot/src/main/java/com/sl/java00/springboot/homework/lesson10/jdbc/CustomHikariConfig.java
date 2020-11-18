@@ -1,4 +1,4 @@
-package com.sl.java00.springboot.homework.custom.jdbc;
+package com.sl.java00.springboot.homework.lesson10.jdbc;
 
 
 import com.zaxxer.hikari.HikariConfig;
@@ -15,7 +15,7 @@ public class CustomHikariConfig {
     public DataSource dataSource() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("com.mysql.jdbc.Driver");
-        hikariConfig.setJdbcUrl("jdbc:mysql://localhost:3306/demo?createDatabaseIfNotExist=true&useSSL=false");
+        hikariConfig.setJdbcUrl("jdbc:mysql://localhost:3306/demo?createDatabaseIfNotExist=true&useSSL=false&charset=utf8&serverTimezone=UTC");
         hikariConfig.setUsername("root");
         hikariConfig.setPassword("123456");
 

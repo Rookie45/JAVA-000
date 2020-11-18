@@ -1,10 +1,10 @@
 package com.sl.java00.springboot;
 
-import com.sl.java00.springboot.homework.custom.autoconfig.Student;
-import com.sl.java00.springboot.homework.custom.jdbc.CustomJDBC;
-import com.sl.java00.springboot.homework.custom.jdbc.CustomBatchJDBC;
-import com.sl.java00.springboot.homework.custom.jdbc.CustomHikariConfig;
-import com.sl.java00.springboot.homework.custom.jdbc.HikariJDBC;
+import com.sl.java00.springboot.homework.lesson10.jdbc.CustomBatchJDBC;
+import com.sl.java00.springboot.homework.lesson10.jdbc.CustomHikariConfig;
+import com.sl.java00.springboot.homework.lesson10.jdbc.CustomJDBC;
+import com.sl.java00.springboot.homework.lesson10.jdbc.HikariJDBC;
+import com.sl.java00.springboot.homework.lesson10.model.Student;
 import org.junit.Test;
 
 import javax.sql.DataSource;
