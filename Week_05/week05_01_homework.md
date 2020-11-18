@@ -24,7 +24,7 @@
 
 **答题如下：**
 
-[xml]()
+[xml](https://github.com/Rookie45/JAVA-000/tree/main/Week_05/spring/src/main/java/com/sl/homework/lesson09/spring/xml)
 
 
 
@@ -33,3 +33,7 @@
 [细说Spring——AOP详解（动态代理实现AOP）](https://www.jianshu.com/p/aaeb2355ec5c)
 
 [bean实例化方法](https://github.com/geektime-geekbang/geekbang-lessons/blob/master/%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%9ASpring%20Bean%E5%9F%BA%E7%A1%80.pdf)
+
+[Extensible XML authoring](https://docs.spring.io/spring-framework/docs/4.2.x/spring-framework-reference/html/xml-custom.html)
+
+[Spring 自定义 XML 配置扩展](https://blog.csdn.net/Dongguabai/article/details/84553612)
