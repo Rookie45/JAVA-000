@@ -1,0 +1,61 @@
+CREATE TABLE IF NOT EXISTS `tb_user` (
+  `member_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `member_username` varchar(64) DEFAULT NULL COMMENT '用户名',
+  `member_password` varchar(64) DEFAULT NULL COMMENT '密码',
+  `member_nickname` varchar(64) DEFAULT NULL COMMENT '昵称',
+  `member_phone` varchar(64) DEFAULT NULL COMMENT '手机号码',
+  `status` int(1) DEFAULT NULL COMMENT '帐号启用状态:0->禁用;1->启用',
+  `icon` varchar(500) DEFAULT NULL COMMENT '头像',
+  `gender` int(1) DEFAULT NULL COMMENT '性别：0->火星人;1->男;2->女',
+  `birthday` date DEFAULT NULL COMMENT '生日',
+  `modify_time` datetime DEFAULT NULL COMMENT '最近修改时间',
+  `create_time` datetime DEFAULT NULL COMMENT '注册时间',
+  PRIMARY KEY (`member_id`),
+  UNIQUE KEY `idx_username` (`member_username`),
+  UNIQUE KEY `idx_phone` (`member_phone`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+CREATE TABLE IF NOT EXISTS `tb_order` (
+  `order_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订单id',
+  `member_id` bigint(20) NOT NULL,
+  `order_sn` varchar(64) DEFAULT NULL COMMENT '订单编号',
+  `member_username` varchar(64) DEFAULT NULL COMMENT '用户帐号',
+  `total_amount` decimal(10,2) DEFAULT NULL COMMENT '订单总金额',
+  `pay_amount` decimal(10,2) DEFAULT NULL COMMENT '应付金额',
+  `promotion_amount` decimal(10,2) DEFAULT NULL COMMENT '促销优惠金额（促销价）',
+  `pay_type` int(1) DEFAULT NULL COMMENT '支付方式：0->未支付;1->支付宝;2->微信',
+  `status` int(1) DEFAULT NULL COMMENT '订单状态：0->待付款;1->已完成;2->已关闭;3->无效订单',
+  `note` varchar(500) DEFAULT NULL COMMENT '订单备注',
+  `delete_status` int(1) NOT NULL DEFAULT '0' COMMENT '删除状态：0->未删除;1->已删除',
+  `payment_time` datetime DEFAULT NULL COMMENT '支付时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `create_time` datetime DEFAULT NULL COMMENT '提交时间',
+  PRIMARY KEY (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
+
+CREATE TABLE IF NOT EXISTS `tb_product` (
+  `product_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(64) NOT NULL,
+  `product_category_name` varchar(255) DEFAULT NULL COMMENT '商品分类名称',
+  `product_sn` varchar(64) NOT NULL COMMENT '货号',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `sale` int(11) DEFAULT NULL COMMENT '销量',
+  `price` decimal(10,2) DEFAULT NULL COMMENT '价格',
+  `promotion_price` decimal(10,2) DEFAULT NULL COMMENT '促销价格',
+  `description` text COMMENT '商品简述',
+  `pic` varchar(255) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL COMMENT '库存',
+  `low_stock` int(11) DEFAULT NULL COMMENT '库存预警值',
+  `unit` varchar(16) DEFAULT NULL COMMENT '单位',
+  `detail_title` varchar(255) DEFAULT NULL COMMENT '详情标题',
+  `detail_desc` text COMMENT '产品详情内容',
+  `promotion_start_time` datetime DEFAULT NULL COMMENT '促销开始时间',
+  `promotion_end_time` datetime DEFAULT NULL COMMENT '促销结束时间',
+  `promotion_per_limit` int(11) DEFAULT NULL COMMENT '活动限购数量',
+  `promotion_type` int(1) DEFAULT NULL COMMENT '促销类型：0->原价; 1->使用促销价;',
+  `delete_status` int(1) DEFAULT NULL COMMENT '删除状态：0->未删除; 1->已删除',
+  `publish_status` int(1) DEFAULT NULL COMMENT '上架状态：0->下架; 1->上架',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `create_time` datetime DEFAULT NULL COMMENT '上架时间',
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品信息';
