@@ -55,3 +55,5 @@
 [java进阶训练营](https://u.geekbang.org/subject/java/1000579?utm_source=u_list_web&utm_medium=u_list_web&utm_term=u_list_web)
 
 [mall project](http://www.macrozheng.com/#/database/mall_database_overview)
+
+[MySQL存储过程批量插入百万条数据](https://cloud.tencent.com/developer/news/605176)
