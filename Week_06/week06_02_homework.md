@@ -21,8 +21,11 @@
 **答题如下：**
 
 测试的关系数据库为mysql5.7和postgresql12.5
-插入见存储过程批量插入
+
+插入见存储过程批量插入：
+
 [million_data_func.sql](https://github.com/Rookie45/JAVA-000/blob/main/Week_06/million_data_func.sql)
+
 [million_data_pg.sql](https://github.com/Rookie45/JAVA-000/blob/main/Week_06/million_data_pg.sql)
 
 update tb_order set pay_amount=2 where delete_status=0;
