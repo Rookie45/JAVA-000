@@ -20,7 +20,16 @@
 
 **答题如下：**
 
+测试的关系数据库为mysql5.7和postgresql12.5
+插入见存储过程批量插入
+[million_data_func.sql](https://github.com/Rookie45/JAVA-000/blob/main/Week_06/million_data_func.sql)
+[million_data_pg.sql](https://github.com/Rookie45/JAVA-000/blob/main/Week_06/million_data_pg.sql)
 
+update tb_order set pay_amount=2 where delete_status=0;
+
+select order_sn from tb_order where order_id > 800000;
+
+delete from tb_order where delete_status=0;
 
 **题目**
 
@@ -28,6 +37,12 @@
 
 **答题如下：**
 
+|操作 |mysql5.7|postgresql12.5|access2013|
+|  ----  | ----  | ----  | ----  |
+|  增加  | 00:01:53.22 | 00:00:42.483 | -- |
+|  删除  | 00:00:42.84 | 00:00:09.35 | -- |
+|  修改  | 00:00:41.19 | 00:00:34.92 | -- |
+|  查询  | 00:00:01.28 | 00:00:01.22 | -- |
 
 
 5、尝试对MySQL不同引擎下测试100万订单数据的增删改查性能。
