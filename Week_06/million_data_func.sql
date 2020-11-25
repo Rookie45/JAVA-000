@@ -42,3 +42,4 @@ BEGIN
 	END$$
 
 delimiter ;
+CALL multiInsertM(1000000);
