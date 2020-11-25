@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `tb_order` (
   `business_id` bigint(20) NOT NULL COMMENT '商家id',
   `product_snapshot` varchar(128) DEFAULT NULL COMMENT '商品快照路径',
   `pay_amount` decimal(10,2) DEFAULT NULL COMMENT '应付金额',
-  `status` int(1) DEFAULT NULL COMMENT '订单状态：0->待付款;1->已完成;2->已关闭;3->无效订单',
+  `order_status` int(1) DEFAULT NULL COMMENT '订单状态：0->待付款;1->已完成;2->已关闭;3->无效订单',
   `note` varchar(255) DEFAULT NULL COMMENT '订单备注',
   `delete_status` int(1) NOT NULL DEFAULT '0' COMMENT '删除状态：0->未删除;1->已删除',
   `payment_time` datetime DEFAULT NULL COMMENT '支付时间',
@@ -34,9 +34,10 @@ CREATE TABLE IF NOT EXISTS `tb_business`(
   `business_name` varchar(64) DEFAULT NULL COMMENT '商家名',
   `description` varchar(255) DEFAULT NULL COMMENT '商家简介',
   `evaluatation` decimal(2,1) COMMENT '好评率: 0.0 -> 5.0',
-  `qualification` varchar(128) DEFAULT NULL COMMENT '资质路径',
+  `qualification` varchar(128) DEFAULT NULL COMMENT '资质页面路径',
   `create_time` datetime DEFAULT NULL COMMENT '注册时间',
   PRIMARY KEY (`business_id`)
+  UNIQUE KEY `idx_business_name` (`business_name`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商家表';
 
 CREATE TABLE IF NOT EXISTS `tb_product` (
@@ -71,4 +72,4 @@ CREATE TABLE IF NOT EXISTS `tb_order_item` (
   `product_price` decimal(10,2) DEFAULT NULL COMMENT '销售价格',
   `product_quantity` int(11) DEFAULT NULL COMMENT '购买数量',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单包含的商品表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='来自同一家商店订单包含的商品表';

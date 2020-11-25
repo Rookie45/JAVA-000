@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="StudentTables" targetRuntime="MyBatis3">
+        <!--插件定义-->
+        <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin" />
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+
+        <!--jdbc连接-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/demo?useSSL=false&amp;charset=utf8&amp;serverTimezone=UTC"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <!--映射的实体类-->
+        <javaModelGenerator targetPackage="com.sl.java00.springboot.homework.lesson10.model"
+                            targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--mapper生成的位置-->
+        <sqlMapGenerator targetPackage="com.sl.java00.springboot.homework.lesson10.mapper"
+                         targetProject="./src/main/resources/mapper">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!--生成的模式-->
+        <javaClientGenerator type="MIXEDMAPPER"
+                             targetPackage="com.sl.java00.springboot.homework.lesson10.mapper"
+                             targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!--表与实体类映射关系-->
+        <table tableName="tb_student" domainObjectName="Student" >
+            <generatedKey column="id" sqlStatement="CALL IDENTITY()" identity="true" />
+            <columnOverride column="name" javaType="java.lang.String" jdbcType="VARCHAR"
+                            typeHandler="com.sl.java00.springboot.homework.lesson10.handler.NameTypeHandler"/>
+        </table>
+    </context>
+</generatorConfiguration>
