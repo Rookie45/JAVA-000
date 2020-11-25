@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS `tb_business`(
   `evaluatation` decimal(2,1) COMMENT '好评率: 0.0 -> 5.0',
   `qualification` varchar(128) DEFAULT NULL COMMENT '资质页面路径',
   `create_time` datetime DEFAULT NULL COMMENT '注册时间',
-  PRIMARY KEY (`business_id`)
-  UNIQUE KEY `idx_business_name` (`business_name`),
+  PRIMARY KEY (`business_id`),
+  UNIQUE KEY `idx_business_name` (`business_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商家表';
 
 CREATE TABLE IF NOT EXISTS `tb_product` (
