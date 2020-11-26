@@ -24,7 +24,7 @@
 
 插入见存储过程批量插入：
 
-[million_data_func.sql](https://github.com/Rookie45/JAVA-000/blob/main/Week_06/million_data_func.sql)
+[million_data_mysql.sql](https://github.com/Rookie45/JAVA-000/blob/main/Week_06/million_data_mysql.sql)
 
 [million_data_pg.sql](https://github.com/Rookie45/JAVA-000/blob/main/Week_06/million_data_pg.sql)
 
