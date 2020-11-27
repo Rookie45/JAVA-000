@@ -93,3 +93,5 @@ delete from tb_order where delete_status=0;
 [MySQL存储过程批量插入百万条数据](https://cloud.tencent.com/developer/news/605176)
 
 [数据库连接池性能测试](https://codeleading.com/article/71873965168/)
+
+[MySQL批量Insert，HikariCP、线程池参数优化测试](https://blog.csdn.net/hylaking/article/details/87806035)
