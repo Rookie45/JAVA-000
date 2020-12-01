@@ -16,3 +16,5 @@
 **参考**
 
 [Spring Boot 多数据源（读写分离）入门](https://cloud.tencent.com/developer/article/1614815)
+
+[example](https://github.com/HuangJin1024/SpringBoot-labs)
