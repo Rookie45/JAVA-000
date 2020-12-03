@@ -53,3 +53,6 @@
 
 **参考**
 
+[HikariCP MySQL Configuration](https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration)
+
+[分布式唯一ID生成器](https://www.liaoxuefeng.com/article/1280526512029729#0)
