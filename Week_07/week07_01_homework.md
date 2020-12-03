@@ -42,6 +42,8 @@
 
 **答题如下：**
 
+[SnowflakeIdGenerator.java](https://github.com/Rookie45/JAVA-000/blob/main/Week_07/SnowflakeIdGenerator.java)
+
 **题目**
 
 7、尝试实现或改造一个非精确分页的程序。
