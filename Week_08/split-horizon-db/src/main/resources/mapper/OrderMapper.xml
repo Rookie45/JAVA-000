@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.java00.homework.separatedb.mapper.OrderMapper">
+
+    <resultMap id="orderResultmap" type="com.sl.java00.homework.separatedb.model.OrderModel">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+    
+    <sql id="FIELDS">
+        id, name
+    </sql>
+
+    <insert id="save">
+        INSERT INTO test (
+        `id`,
+        `name`
+        ) values (
+        #{id},
+        #{name}
+        )
+    </insert>
+
+    <select id="selectById" parameterType="Integer" resultMap="orderResultmap">
+        SELECT
+        <include refid="FIELDS" />
+        FROM test
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="orderResultmap">
+        SELECT
+        <include refid="FIELDS" />
+        FROM test
+    </select>
+
+</mapper>
