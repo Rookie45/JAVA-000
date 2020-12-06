@@ -2,37 +2,13 @@ server:
   port: 8181
 
 spring:
-  shardingsphere:
-    datasource:
-      names: master, slave1, slave2
-      master:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://localhost:3306/db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
-        username: root
-        password:
-      slave1:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://localhost:3316/db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
-        username: root
-        password:
-      slave2:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://localhost:3317/db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
-        username: root
-        password:
-    # 读写分离配置，对应 YamlMasterSlaveRuleConfiguration 配置类
-    masterslave:
-      name: ms
-      master-data-source-name: master
-      slave-data-source-names: slave1, slave2
-    #      load-balance-algorithm-type: round_robin
-    props:
-      sql:
-        show: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/mall_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+
 mybatis:
-  config-location: classpath:mybatis-config.xml # 配置 MyBatis 配置文件路径
-  mapper-locations: classpath:mapper/*.xml # 配置 Mapper XML 地址
-  type-aliases-package: com.sl.java00.homework.separatereadwritev2.model # 配置数据库实体包路径
+  config-location: classpath:mybatis-config.xml # 閰嶇疆 MyBatis 閰嶇疆鏂囦欢璺緞
+  mapper-locations: classpath:mapper/*.xml # 閰嶇疆 Mapper XML 鍦板潃
+  type-aliases-package: com.sl.java00.homework.separatedb.model # 閰嶇疆鏁版嵁搴撳疄浣撳寘璺緞

@@ -9,7 +9,11 @@ import java.util.List;
 @Repository
 public interface OrderMapper {
 
-    int save(OrderModel t1);
+    int save(OrderModel o1);
+
+    int update(OrderModel o1);
+
+    int delete(@Param("id") Integer id);
 
     OrderModel selectById(@Param("id") Integer id);
 

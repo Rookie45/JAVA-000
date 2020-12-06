@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
 @Slf4j
 public class OrderService {
+
     @Autowired
     private OrderMapper orderMapper;
 
@@ -23,15 +27,15 @@ public class OrderService {
         return orderMapper.selectAll();
     }
 
-    @Transactional
     public int save(OrderModel orderModel) {
-        List<OrderModel> before = orderMapper.selectAll();
-        log.info("[TestService][save] before save, db has {}", before);
+        return orderMapper.save(orderModel);
+    }
 
-        int result = orderMapper.save(orderModel);
+    public int update(OrderModel orderModel) {
+        return orderMapper.update(orderModel);
+    }
 
-        List<OrderModel> after = orderMapper.selectAll();
-        log.info("[TestService][save] after save, db has {}", after);
-        return result;
+    public int delete(Integer id) {
+        return orderMapper.delete(id);
     }
 }

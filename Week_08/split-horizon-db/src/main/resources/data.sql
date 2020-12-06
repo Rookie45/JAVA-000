@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS `tb_order` (
-  `order_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订单id',
+CREATE TABLE IF NOT EXISTS `t_order` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订单id',
   `order_sn` varchar(64) DEFAULT NULL COMMENT '订单编号',
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
   `business_id` bigint(20) NOT NULL COMMENT '商家id',
@@ -11,5 +11,6 @@ CREATE TABLE IF NOT EXISTS `tb_order` (
   `payment_time` datetime DEFAULT NULL COMMENT '支付时间',
   `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
   `create_time` datetime DEFAULT NULL COMMENT '提交时间',
-  PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin; COMMENT='订单表';
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='订单表';
+
