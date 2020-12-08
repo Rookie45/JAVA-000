@@ -1,7 +1,7 @@
 编译ss，使用如下命令可大大减短编译时间
 
 ```java
-mvn clean package install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true -Dcheckstyle.skip=true
+mvn clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true -Dcheckstyle.skip=true
 ```
 
 其中shardingsphere-integration-test这个模块编译时，不能跳过test，所以单独编译这个模块，mvn命令不能带有-Dmaven.test.skip=true
