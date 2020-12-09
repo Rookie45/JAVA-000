@@ -1,4 +1,4 @@
-package com.sl.java00.homework.hmilytcc.model;
+package com.sl.java00.homework.hmilytccorder.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,16 +17,16 @@ public class OrderModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private Integer id;
+    private Integer orderId;
     private String orderSn;
-    private Long userId;
-    private Long businessId;
-    private String productSnapshot;
-    private BigDecimal payAmount;
     private Integer orderStatus;
-    private String note;
-    private Integer deleteStatus;
-    private Timestamp paymentTime;
+    private Integer productId;
+    private String productName;
+    private String productSn;
+    private Integer productQuantity;
+    private Integer skuId;
+    private String skuCode;
     private Timestamp modifyTime;
     private Timestamp createTime;
 
