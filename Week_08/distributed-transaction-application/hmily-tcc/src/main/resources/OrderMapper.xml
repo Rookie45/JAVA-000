@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.java00.homework.hmilytccorder.mapper.OrderMapper">
+
+    <resultMap id="orderResultMap" type="com.sl.java00.homework.hmilytccorder.model.OrderModel">
+        <id property="id" column="id"/>
+        <result property="orderId" javaType="Integer" column="order_id" />
+        <result property="orderSn" javaType="String" column="order_sn" jdbcType="VARCHAR"/>
+        <result property="orderStatus" javaType="Integer" column="order_status"/>
+        <result property="productId" javaType="Integer" column="product_id"/>
+        <result property="productName" javaType="String" column="product_name" jdbcType="VARCHAR"/>
+        <result property="productSn" javaType="String" column="product_sn" jdbcType="VARCHAR"/>
+        <result property="productQuantity" javaType="Integer" column="product_quantity"/>
+        <result property="skuId" javaType="Integer" column="sku_id"/>
+        <result property="skuCode" javaType="String" column="sku_code" jdbcType="DECIMAL"/>
+        <result property="modifyTime" javaType="Timestamp" column="modify_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" javaType="Timestamp" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    
+    <sql id="FIELDS">
+        id, order_id, order_sn, order_status, product_id, product_name,
+        product_sn, product_quantity, sku_id,
+        sku_code, modify_time, create_time
+    </sql>
+
+    <insert id="save">
+        INSERT INTO t_order_item (
+        <include refid="FIELDS" />
+        ) values (
+        #{id},
+        #{orderId},
+        #{orderSn},
+        #{orderStatus},
+        #{productId},
+        #{productName},
+        #{productSn},
+        #{productQuantity},
+        #{skuId},
+        #{skuCode},
+        now(),
+        now()
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE t_order_item SET
+        <if test="orderId != null">order_id=#{orderId},</if>
+        <if test="orderSn!=null">order_sn=#{orderSn},</if>
+        <if test="orderStatus!=null">order_status=#{orderStatus},</if>
+        <if test="productId!=null">product_id=#{productId},</if>
+        <if test="productName!=null">product_name=#{productName},</if>
+        <if test="productSn!=null">product_sn=#{productSn},</if>
+        <if test="productQuantity!=null">product_quantity=#{productQuantity},</if>
+        <if test="skuId!=null">sku_id=#{skuId},</if>
+        <if test="skuCode!=null">sku_code=#{skuCode},</if>
+        modify_time = now()
+        WHERE id=#{id}
+    </update>
+
+    <select id="selectById" parameterType="Integer" resultMap="orderResultMap">
+        SELECT
+        <include refid="FIELDS" />
+        FROM t_order_item
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="orderResultMap">
+        SELECT
+        <include refid="FIELDS" />
+        FROM t_order_item
+    </select>
+
+</mapper>
