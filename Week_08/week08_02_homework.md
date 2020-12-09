@@ -9,6 +9,7 @@
 2、（必做）基于hmily TCC或ShardingSphere的Atomikos XA实现一个简单的分布式事务应用demo（二选一），提交到github。
 
 **答题如下**
+[hmily TCC](https://github.com/Rookie45/JAVA-000/tree/main/Week_08/distributed-transaction-application/hmily-tcc)
 
 **题目**
 
@@ -39,3 +40,7 @@
 7、（选做☆）设计实现一个AT分布式事务框架的简单Demo，仅需要支持根据主键id进行的单个删改操作的SQL或插入操作的事务。
 
 **答题如下**
+
+**参考**
+
+[hmily官网](https://dromara.org/website/en-us/docs/hmily/config-local.html)
