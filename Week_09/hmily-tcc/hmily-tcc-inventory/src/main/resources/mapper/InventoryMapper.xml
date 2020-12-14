@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.java00.homework.hmilytccinvetory.mapper.InventoryMapper">
+
+    <resultMap id="inventoryResultMap" type="com.sl.java00.homework.hmilytccinvetory.model.InventoryModel">
+        <id property="id" column="id"/>
+        <result property="productId" javaType="Integer" column="product_id"/>
+        <result property="skuCode" javaType="String" column="sku_code" jdbcType="DECIMAL"/>
+        <result property="stock" javaType="Integer" column="stock"/>
+        <result property="lowStock" javaType="Integer" column="low_stock"/>
+        <result property="lockStock" javaType="Integer" column="lock_stock"/>
+        <result property="modifyTime" javaType="Timestamp" column="modify_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" javaType="Timestamp" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="FIELDS">
+        id, product_id, sku_code, stock, low_stock,
+        lock_stock, modify_time, create_time
+    </sql>
+
+    <update id="update">
+        UPDATE t_sku_inventory SET
+        <if test="stock!=null">stock=#{stock},</if>
+        <if test="lockStock!=null">lock_stock=#{lockStock},</if>
+        modify_time = now()
+        WHERE product_id = #{productId} AND stock > 0
+    </update>
+
+    <select id="selectByProductId" parameterType="Integer" resultMap="inventoryResultMap">
+        SELECT
+        <include refid="FIELDS"/>
+        FROM t_sku_inventory
+        WHERE product_id = #{productId}
+    </select>
+
+</mapper>
