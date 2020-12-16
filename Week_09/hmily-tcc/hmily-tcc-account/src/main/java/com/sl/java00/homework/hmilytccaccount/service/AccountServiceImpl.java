@@ -15,19 +15,14 @@
  * limitations under the License.
  */
 
-package org.dromara.hmily.demo.dubbo.account.service;
+package com.sl.java00.homework.hmilytccaccount.service;
 
-import org.dromara.hmily.annotation.HmilyTAC;
+import com.sl.java00.homework.hmilytccaccount.mapper.AccountMapper;
+import com.sl.java00.homework.hmilytcccommon.account.api.AccountService;
+import com.sl.java00.homework.hmilytcccommon.inventory.api.InventoryService;
 import org.dromara.hmily.annotation.HmilyTCC;
 import org.dromara.hmily.common.exception.HmilyRuntimeException;
-import org.dromara.hmily.demo.common.account.dto.AccountDTO;
-import org.dromara.hmily.demo.common.account.dto.AccountNestedDTO;
-import org.dromara.hmily.demo.common.account.entity.AccountDO;
-import org.dromara.hmily.demo.common.account.mapper.AccountMapper;
-import org.dromara.hmily.demo.common.account.api.AccountService;
-import org.dromara.hmily.demo.common.account.api.InlineService;
-import org.dromara.hmily.demo.common.inventory.api.InventoryService;
-import org.dromara.hmily.demo.common.inventory.dto.InventoryDTO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * The type Account service.
- *
- * @author xiaoyu
- */
+
 @Service("accountService")
 public class AccountServiceImpl implements AccountService {
 
@@ -62,8 +53,6 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapper accountMapper;
 
     private final InventoryService inventoryService;
-
-    private final InlineService inlineService;
 
     /**
      * Instantiates a new Account service.

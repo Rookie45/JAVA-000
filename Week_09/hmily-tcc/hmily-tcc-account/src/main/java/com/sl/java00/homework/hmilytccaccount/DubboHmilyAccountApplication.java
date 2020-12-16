@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.dromara.hmily.demo.dubbo.account;
+package com.sl.java00.homework.hmilytccaccount;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

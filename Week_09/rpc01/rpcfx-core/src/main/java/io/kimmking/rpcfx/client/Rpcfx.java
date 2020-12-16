@@ -5,6 +5,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResponse;
+import io.kimmking.rpcfx.common.BB;
+import io.kimmking.rpcfx.common.BBAdvisor;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.asm.Advice;
+import net.bytebuddy.matcher.ElementMatchers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,6 +27,19 @@ public final class Rpcfx {
     }
 
     public static <T> T create(final Class<T> serviceClass, final String url) {
+
+        try {
+            T target = new ByteBuddy()
+                    .makeInterface(serviceClass)
+                    .method(ElementMatchers.any())
+                    .intercept(Advice.to(BBAdvisor.class))
+                    .make()
+                    .load(serviceClass.getClassLoader())
+                    .getLoaded()
+                    .newInstance();
+        } catch (IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
 
         // 0. 替换动态代理 -> AOP
         return (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, new RpcfxInvocationHandler(serviceClass, url));
