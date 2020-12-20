@@ -1,18 +1,31 @@
-package io.kimmking.rpcfx.client;
+package io.kimmking.rpcfx.client.proxy;
 
 import com.alibaba.fastjson.JSON;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResponse;
+import io.kimmking.rpcfx.client.RpcfxProxy;
 import io.kimmking.rpcfx.exception.RpcfxException;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.nio.charset.StandardCharsets;
 
 public class JdkInvocationHandler implements InvocationHandler {
     private final MediaType JSONTYPE = MediaType.get("application/json; charset=utf-8");
@@ -29,26 +42,28 @@ public class JdkInvocationHandler implements InvocationHandler {
     // int byte char float double long bool
     // [], data class
 
+
     @Override
     public Object invoke(Object proxy, Method method, Object[] params) {
         RpcfxRequest request = new RpcfxRequest();
-        request.setServiceClass(this.serviceClass.getName());
+        request.setServiceClass(this.serviceClass);
         request.setMethod(method.getName());
         request.setParams(params);
 
-        RpcfxResponse response = post(request, url);
+        RpcfxResponse response = null;
+        try {
+            response = post(request, url);
+            System.out.println("resp result type: " + response.getResult().getClass());
+            return response.getResult().toString();
+        } catch (IOException e) {
+            throw new RpcfxException(e);
+
+        }
         // 这里判断response.status，处理异常
         // 考虑封装一个全局的RpcfxException
-
-        if (response.isStatus()) {
-            return response.getResult();
-        } else {
-            throw response.getException();
-        }
     }
 
-    private RpcfxResponse post(RpcfxRequest req, String url) {
-        RpcfxResponse response = new RpcfxResponse();
+    private RpcfxResponse post(RpcfxRequest req, String url) throws IOException {
         String reqJson = JSON.toJSONString(req);
         System.out.println("req json: " + reqJson);
 
@@ -59,24 +74,14 @@ public class JdkInvocationHandler implements InvocationHandler {
                 .url(url)
                 .post(RequestBody.create(JSONTYPE, reqJson))
                 .build();
-        String respJson = null;
-        try {
-            ResponseBody respBody = client.newCall(request).execute().body();
-            if (null != respBody) {
-                respJson = respBody.string();
-            }
-            response.setResult(reqJson);
-            response.setStatus(true);
+        String respJson = client.newCall(request)
+                .execute()
+                .body()
+                .string();
 
-            throw new IOException("happen io exception");
-        } catch (IOException e) {
-            e.printStackTrace();
-            response.setException(new RpcfxException(500, e));
-            response.setStatus(false);
-        }
+
         System.out.println("resp json: " + respJson);
-//            response = JSON.parseObject(respJson, RpcfxResponse.class);
-        return response;
+        return JSON.parseObject(respJson, RpcfxResponse.class);
     }
 
 

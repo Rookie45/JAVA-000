@@ -1,4 +1,4 @@
-package io.kimmking.rpcfx.client;
+package io.kimmking.rpcfx.client.proxy;
 
 import com.alibaba.fastjson.JSON;
 import io.kimmking.rpcfx.api.RpcfxRequest;
@@ -31,7 +31,7 @@ public class BytebuddyInvocationHandler {
     @RuntimeType
     public Object invoke(@This Object proxy, @Origin Method method, @AllArguments @RuntimeType Object[] args) {
         RpcfxRequest request = new RpcfxRequest();
-        request.setServiceClass(this.serviceClass.getName());
+        request.setServiceClass(this.serviceClass);
         request.setMethod(method.getName());
         request.setParams(args);
         RpcfxResponse response = postWithHttp(request, url);
@@ -40,7 +40,7 @@ public class BytebuddyInvocationHandler {
             return response.getResult();
         }
         else {
-            throw response.getException();
+            throw new RpcfxException(response.getException());
         }
     }
 

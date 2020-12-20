@@ -1,10 +1,11 @@
-package io.kimmking.rpcfx.client;
+package io.kimmking.rpcfx.client.proxy;
 
 import com.alibaba.fastjson.JSON;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResponse;
+import io.kimmking.rpcfx.client.Rpcfx;
+import io.kimmking.rpcfx.client.RpcfxProxy;
 import io.kimmking.rpcfx.exception.RpcfxException;
-
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -16,28 +17,23 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-public class JdkProxy implements RpcfxProxy {
+public class JdkProxy {
 
-    private JdkProxy(){}
+    private JdkProxy() {
+    }
 
     private static class InnerClass {
         private static final JdkProxy INSTANCE = new JdkProxy();
     }
+
     public static JdkProxy getInstance() {
         return InnerClass.INSTANCE;
     }
 
-    @Override
-    public <T> T createProxy(final Class<T> serviceClass, final String url) {
+    public <T> T createProxy(final Class<T> serviceClass, final String url) throws RpcfxException {
 
-        T target = null;
-        try {
-            JdkInvocationHandler handler = new JdkInvocationHandler(serviceClass, url);
-            target = (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, handler);
-        } catch (IllegalArgumentException e) {
-            throw new RpcfxException(e);
-        }
-        return target;
+        return (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, new JdkInvocationHandler(serviceClass, url));
     }
+
 
 }

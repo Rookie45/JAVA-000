@@ -1,6 +1,6 @@
 package io.kimmking.rpcfx.exception;
 
-public class RpcfxException extends Exception{
+public class RpcfxException extends RuntimeException{
     private int code;
 
     public RpcfxException(String message, Throwable cause) {
