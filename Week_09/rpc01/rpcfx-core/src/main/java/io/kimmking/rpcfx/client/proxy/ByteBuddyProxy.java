@@ -8,7 +8,7 @@ import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
 
-public class ByteBuddyProxy {
+public class ByteBuddyProxy implements RpcfxProxy{
 
     private ByteBuddyProxy() {
     }
