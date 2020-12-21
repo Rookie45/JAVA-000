@@ -53,8 +53,7 @@ public class JdkInvocationHandler implements InvocationHandler {
         RpcfxResponse response = null;
         try {
             response = post(request, url);
-            System.out.println("resp result type: " + response.getResult().getClass());
-            return response.getResult().toString();
+            return response.getResult();
         } catch (IOException e) {
             throw new RpcfxException(e);
 
@@ -79,10 +78,7 @@ public class JdkInvocationHandler implements InvocationHandler {
                 .body()
                 .string();
 
-
         System.out.println("resp json: " + respJson);
         return JSON.parseObject(respJson, RpcfxResponse.class);
     }
-
-
 }
