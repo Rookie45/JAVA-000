@@ -8,9 +8,8 @@
 		<version>0.0.1-SNAPSHOT</version>
 <!--		<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
 	</parent>
-	<groupId>io.kimmking</groupId>
+
 	<artifactId>rpcfx-core</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>rpcfx-core</name>
 
 	<properties>
