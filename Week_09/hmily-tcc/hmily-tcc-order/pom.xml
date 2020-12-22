@@ -9,10 +9,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>hmily-tcc-order</artifactId>
-    <packaging>jar</packaging>
-    <name>hmily-tcc-order</name>
-
+    <artifactId>hmily-tcc-consumer</artifactId>
+    <name>hmily-tcc-consumer</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -21,39 +19,29 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.dromara</groupId>
-            <artifactId>hmily-spring-boot-starter-dubbo</artifactId>
-            <version>${hmily.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.sl.java00.homework</groupId>
             <artifactId>hmily-tcc-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>hmily-spring-boot-starter-dubbo</artifactId>
+            <version>${hmily.version}</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.sl.java00.homework.hmilytccorder.HmilyTccOrderApplication</mainClass>
-                    <executable>true</executable>
-                </configuration>
             </plugin>
         </plugins>
     </build>
