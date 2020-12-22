@@ -21,7 +21,7 @@ public class ByteBuddyProxy implements RpcfxProxy{
         return InnerClass.INSTANCE;
     }
 
-
+    @Override
     public <T> T createProxy(final Class<T> serviceClass, final String url) {
         BytebuddyInvocationHandler handler = new BytebuddyInvocationHandler(serviceClass, url);
 
