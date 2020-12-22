@@ -1,58 +1,40 @@
-package com.sl.java00.homework.hmilytccorder.controller;
+package com.sl.java00.homework.hmilytccconsumer.controller;
 
-import com.sl.java00.homework.hmilytccorder.model.OrderModel;
-import com.sl.java00.homework.hmilytccorder.service.impl.OrderService;
+import com.sl.java00.homework.hmilytcccommon.dto.TransactionDTO;
+import com.sl.java00.homework.hmilytccconsumer.service.ConsumerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-@RestController
 @Slf4j
-public class OrderController {
+@RestController
+public class ConsumerController {
 
-    private OrderService orderService;
+    private ConsumerService consumerService;
 
     @Autowired
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
+    public ConsumerController(ConsumerService consumerService) {
+        this.consumerService = consumerService;
     }
 
     /**
      * {
-     * "id":10,
-     * "orderId":10,
-     * "orderSn":"bbbbb",
-     * "orderStatus":0,
-     * "productId":28,
-     * "productName":"goods1",
-     * "productSn":"zxcvasd",
-     * "productQuantity":1,
-     * "skuId":20,
-     * "skuCode":"20201208121212"
+     * "consumerUserId":1,
+     * "providerUserId":2,
+     * "account":1.0,
+     * "type":2
      * }
-     *
-     * @param order order
-     * @return response
+     * @param dto dto
+     * @return true or false
      */
     @PostMapping("/test")
-    public ResponseEntity<?> transactOrder(@RequestBody OrderModel order) {
-        log.info("[TestController][save] order request is {}", order);
-        Boolean result = orderService.orderTransaction(order);
+    public ResponseEntity<?> transactBalance(@RequestBody TransactionDTO dto) {
+        log.info("[ConsumerController][transactBalance] order request is {}", dto);
+        boolean result = consumerService.transactionUSD2RMB(dto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
-    @GetMapping("/tests")
-    public ResponseEntity<?> findAll() {
-        List<OrderModel> tests = orderService.getAll();
-        return new ResponseEntity<>(tests, HttpStatus.OK);
-    }
-
-
 }
