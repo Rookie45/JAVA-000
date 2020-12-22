@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sl.java00.homework.hmilytcccommon.mapper.FreezeMapper">
+
+    <resultMap id="freezeResultMap" type="com.sl.java00.homework.hmilytcccommon.model.FreezeModel">
+        <id property="id" column="id"/>
+        <result property="accountId" javaType="Integer" column="account_id"/>
+        <result property="freezeAmount" javaType="BigDecimal" column="freeze_amount" jdbcType="DECIMAL"/>
+        <result property="freezeType" javaType="Integer" column="freeze_type"/>
+        <result property="modifyTime" javaType="Timestamp" column="modify_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" javaType="Timestamp" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="fields">
+        id, account_id, freeze_amount, freeze_type, modify_time, create_time
+    </sql>
+
+    <sql id="fieldsNoId">
+        account_id, freeze_amount, freeze_type, modify_time, create_time
+    </sql>
+
+    <insert id="save" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO t_freeze (
+        <include refid="fieldsNoId"/>
+        ) values (
+        #{accountId},
+        #{freezeAmount},
+        #{freezeType},
+        now(),
+        now()
+        )
+    </insert>
+
+    <update id="update" parameterType="Integer">
+        UPDATE t_freeze SET
+        <if test="freezeAmount!=null">freeze_amount=#{freezeAmount},</if>
+        <if test="freezeType!=null">freeze_type=#{freezeType},</if>
+        modify_time = now()
+        WHERE account_id = #{accountId}
+    </update>
+
+    <delete id="deleteByAccountId" parameterType="Integer">
+        DELETE FROM t_freeze
+        WHERE account_id = #{accountId}
+    </delete>
+
+</mapper>
