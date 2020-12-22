@@ -16,8 +16,8 @@
 
     <modules>
         <module>hmily-tcc-common</module>
-        <module>hmily-tcc-order</module>
-        <module>hmily-tcc-inventory</module>
+        <module>hmily-tcc-provider</module>
+        <module>hmily-tcc-consumer</module>
     </modules>
 
     <properties>
@@ -29,6 +29,7 @@
         <zookeeper.version>3.6.0</zookeeper.version>
         <curator.version>5.1.0</curator.version>
         <mybatis.version>2.1.4</mybatis.version>
+        <!--<netty.version>4.1.45.Final</netty.version>-->
     </properties>
 
     <dependencyManagement>
