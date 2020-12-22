@@ -8,7 +8,7 @@
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <dubbo:application name="order_service"/>
+    <dubbo:application name="consumer_service"/>
 
     <dubbo:registry protocol="zookeeper" address="localhost:2181"/>
 
@@ -17,7 +17,6 @@
                     charset="UTF-8" threadpool="fixed" threads="500"
                     queues="0" buffer="8192" accepts="0" payload="8388608"/>
 
-    <dubbo:reference id="inventoryService"
-                     interface="com.sl.java00.homework.hmilytcccommon.inventory.api.InventoryService"
-                     timeout="500000000" retries="0" check="false" actives="20" loadbalance="hmilyRandom"/>
+    <dubbo:reference id="transactionService" interface="com.sl.java00.homework.hmilytcccommon.api.TransactionService"
+                     timeout="500000000"  retries="0" check="false" actives="20" loadbalance="hmilyRandom" />
 </beans>
