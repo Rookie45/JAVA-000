@@ -1,14 +1,27 @@
 server:
-  port: 8182
-
+  port: 8282
+  servlet:
+    context-path: /
+  address: 0.0.0.0
 spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mall_order?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
-    username: root
-    password: 123456
+    datasource:
+        driver-class-name:  com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/account_db1?useUnicode=true&characterEncoding=utf8
+        username: root
+        password: 123456
 
 mybatis:
-  config-location: classpath:mybatis-config.xml # 配置 MyBatis 配置文件路径
-  mapper-locations: classpath:mapper/*.xml # 配置 Mapper XML 地址
-  type-aliases-package: com.sl.java00.homework.hmilytccorder.model # 配置数据库实体包路径
+  type-aliases-package: com.sl.java00.homework.hmilytcccommon.model
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
+
+#logging:
+#    level:
+#        root: error
+#        org.springframework.web: info
+#        org.apache.ibatis: debug
+#        org.dromara.hmily.demo.bonuspoint: debug
+#        org.dromara.hmily.demo.lottery: debug
+#        org.dromara.hmily.demo: debug
+#    path: "./logs"
+
