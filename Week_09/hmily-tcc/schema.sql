@@ -1,43 +1,59 @@
-CREATE DATABASE IF NOT EXISTS `mall_order` DEFAULT CHARACTER SET utf8mb4;
+CREATE DATABASE IF NOT EXISTS `account_db1` DEFAULT CHARACTER SET utf8mb4;
 
-USE `mall_order`;
+USE `account_db1`;
 
-DROP TABLE IF EXISTS `t_order_item`;
+DROP TABLE IF EXISTS `t_account`;
 
-CREATE TABLE `t_order_item` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `order_id` INT(11) DEFAULT NULL COMMENT '订单id',
-  `order_sn` varchar(64) DEFAULT NULL COMMENT '订单编号',
-  `order_status` tinyint(4) DEFAULT NULL COMMENT '订单状态：0->待付款;1->支付中;2->支付成功;3->支付失败',
-  `product_id` INT(11) DEFAULT NULL COMMENT '商品id',
-  `product_name` varchar(64) DEFAULT NULL COMMENT '商品名称',
-  `product_sn` varchar(64) DEFAULT NULL COMMENT '商品编号',
-  `product_quantity` int(11) DEFAULT NULL COMMENT '购买数量',
-  `sku_id` INT(11) NULL DEFAULT NULL COMMENT 'sku id',
-  `sku_code` VARCHAR(64) NULL DEFAULT NULL COMMENT 'sku 编码',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+CREATE TABLE `t_account` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `user_id` int(20) NOT NULL COMMENT '用户id',
+  `balance_RMB` decimal(10,0) DEFAULT NULL COMMENT '用户人民币余额',
+  `balance_USD` decimal(10,0) DEFAULT NULL COMMENT '用户美元余额',
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='订单包含的商品';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='A库账户表';
 
+DROP TABLE IF EXISTS `t_freeze`;
 
-CREATE DATABASE IF NOT EXISTS `mall_inventory` DEFAULT CHARACTER SET utf8mb4;
+CREATE TABLE `t_freeze` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `account_id` int(20) NOT NULL COMMENT '账户id',
+  `freeze_amount` decimal(10,0) NOT NULL COMMENT '冻结金额，扣款暂存余额',
+  `freeze_type` tinyint(4) NOT NULL COMMENT '货币类型 1->RMB, 2->USD',
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=UTF8MB4_BIN COMMENT='A库冻结表';
 
-USE `mall_inventory`;
+INSERT INTO `t_account` VALUES (10, 1, 0.0, 1.0, now(), now());
 
-DROP TABLE IF EXISTS `t_sku_inventory`;
+CREATE DATABASE IF NOT EXISTS `account_db2` DEFAULT CHARACTER SET UTF8MB4;
 
-CREATE TABLE `t_sku_inventory` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `product_id` INT(11) DEFAULT NULL COMMENT '商品id',
-  `sku_code` varchar(64) NOT NULL COMMENT 'sku编码',
-  `stock` INT(11) DEFAULT '0' COMMENT '库存',
-  `low_stock` INT(11) DEFAULT NULL COMMENT '预警库存',
-  `lock_stock` INT(11) DEFAULT '0' COMMENT '锁定库存',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='库存';
+USE `account_db2`;
 
-INSERT INTO `t_sku_inventory` VALUES (18, 28, '20201208121212', 100, 20, 0, now(), now());
+DROP TABLE IF EXISTS `t_account`;
+
+CREATE TABLE `t_account` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(20) NOT NULL COMMENT '用户id',
+  `balance_RMB` decimal(10,0) DEFAULT NULL COMMENT '用户人民币余额',
+  `balance_USD` decimal(10,0) DEFAULT NULL COMMENT '用户美元余额',
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='B库账户表';
+
+DROP TABLE IF EXISTS `t_freeze`;
+
+CREATE TABLE `t_freeze` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `account_id` int(20) NOT NULL COMMENT '账户id',
+  `freeze_amount` decimal(10,0) NOT NULL COMMENT '冻结金额，扣款暂存余额',
+  `freeze_type` tinyint(4) NOT NULL COMMENT '冻结货币类型 1->RMB, 2->USD',
+  `create_time` datetime DEFAULT NULL,
+  `modify_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='B库冻结表';
+
+INSERT INTO `t_account` VALUES (20, 2, 7.0, 0.0, now(), now());
