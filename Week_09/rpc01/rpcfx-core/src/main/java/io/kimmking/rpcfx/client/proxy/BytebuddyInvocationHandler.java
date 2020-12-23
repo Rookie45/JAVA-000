@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResponse;
 import io.kimmking.rpcfx.exception.RpcfxException;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
@@ -18,7 +19,9 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class BytebuddyInvocationHandler {
     private Class<?> serviceClass;
     private String url;
@@ -34,22 +37,20 @@ public class BytebuddyInvocationHandler {
         request.setServiceClass(this.serviceClass);
         request.setMethod(method.getName());
         request.setParams(args);
-        RpcfxResponse response = postWithHttp(request, url);
 
-        if (response.isStatus()) {
+        RpcfxResponse response = null;
+        try {
+            response = post(request, url);
             return response.getResult();
-        }
-        else {
-            throw new RpcfxException(response.getException());
+        } catch (IOException e) {
+            throw new RpcfxException(e);
         }
     }
 
     // 使用httpclient
-    private RpcfxResponse postWithHttp(RpcfxRequest req, String url) {
-        RpcfxResponse response = new RpcfxResponse();
+    private RpcfxResponse post(RpcfxRequest req, String url) throws IOException {
         String reqJson = JSON.toJSONString(req);
         System.out.println("req json: " + reqJson);
-        String respJson = null;
 
         RequestConfig config = RequestConfig.custom()
                 .setConnectTimeout(6000)
@@ -72,24 +73,19 @@ public class BytebuddyInvocationHandler {
             httpPost.addHeader("Accept-Charset", "utf-8");
 
             httpResponse = httpClient.execute(httpPost);
-            respJson = EntityUtils.toString(httpResponse.getEntity());
-            response.setResult(respJson);
-            response.setStatus(true);
-        } catch (IOException e) {
-            response.setResult(new RpcfxException(500, e));
-            response.setStatus(false);
+            String respJson = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
+            return JSON.parseObject(respJson, RpcfxResponse.class);
         } finally {
             if (null != httpResponse) {
                 try {
                     httpResponse.close();
                 } catch (IOException e) {
-                    response.setResult(new RpcfxException(500, e));
+                    log.error("[BytebuddyInvocationHandler][post] httpResponse close failed. ");
                 }
             }
             if (null != httpPost) {
                 httpPost.releaseConnection();
             }
         }
-        return response;
     }
 }
