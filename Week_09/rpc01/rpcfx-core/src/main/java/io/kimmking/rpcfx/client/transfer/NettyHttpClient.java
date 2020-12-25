@@ -1,3 +1,5 @@
+package io.kimmking.rpcfx.client.transfer;
+
 import com.alibaba.fastjson.JSON;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResponse;
