@@ -2,8 +2,8 @@ package io.kimmking.rpcfx.client.proxy;
 
 
 import io.kimmking.rpcfx.api.RpcfxResponse;
-import io.kimmking.rpcfx.client.transport.NettyHttpClient;
-import io.kimmking.rpcfx.client.transport.TransportWrapper;
+import io.kimmking.rpcfx.client.transfer.NettyHttpClient;
+import io.kimmking.rpcfx.client.transfer.TransportWrapper;
 import io.kimmking.rpcfx.exception.RpcfxException;
 
 import java.lang.reflect.InvocationHandler;
