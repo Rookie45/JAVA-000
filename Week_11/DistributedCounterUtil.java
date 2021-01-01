@@ -20,12 +20,14 @@ public class DistributedCounterUtil {
     }
 
     public void setCounter(String key, long value) {
-        if (null == redisCommands.get(key)) {
-            redisCommands.set(key,String.valueOf(value));
+        String currValue = redisCommands.get(key);
+        if (null == currValue || 0 > Integer.valueOf(currValue)) {
+            redisCommands.set(key, String.valueOf(value));
         }
     }
 
     public boolean decrease(String key) {
         return 0 < redisCommands.decr(key);
     }
+
 }
