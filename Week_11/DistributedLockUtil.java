@@ -15,7 +15,7 @@ public class DistributedLockUtil {
     private static final String SUCCESS = "OK";
 
     // 过期时间单位为毫秒
-    private static final long DEFAULT_EXPIRE_TIME = 10000L;
+    private static final long DEFAULT_EXPIRE_TIME = 5000L;
 
     private static final String LOCK_LUA = "if redis.call('setnx',KEYS[1],ARGV[1]) == 1 then " +
             "redis.call('expire',KEYS[1],ARGV[2]) return 1 else return 0 end;";
@@ -23,10 +23,12 @@ public class DistributedLockUtil {
     private static final String UNLOCK_LUA = "if redis.call('get',KEYS[1]) == ARGV[1] then " +
             "return redis.call('del',KEYS[1]) else return 0 end;";
 
-    private static AtomicReference<String> LUA_SHA = new AtomicReference<>();
+    private static AtomicReference<String> LUA_SHA_LOCK = new AtomicReference<>();
 
-    private static RedisCommands<String, String> redisCommands; 
-    
+    private static AtomicReference<String> LUA_SHA_UNLOCK = new AtomicReference<>();
+
+    private static RedisCommands<String, String> redisCommands;
+
     static {
         RedisURI redisURI = RedisURI.builder()
                 .withHost("localhost")
@@ -35,7 +37,7 @@ public class DistributedLockUtil {
                 .build();
         redisCommands = RedisClient.create(redisURI).connect().sync();
     }
-    
+
     public boolean lock(String lockKey, String lockValue) throws InterruptedException {
         return lock(lockKey, lockValue, DEFAULT_EXPIRE_TIME);
     }
@@ -59,13 +61,17 @@ public class DistributedLockUtil {
         return false;
     }
 
+    public boolean lockWithLua(String lockKey, String lockValue) {
+        return lockWithLua(lockKey, lockValue, DEFAULT_EXPIRE_TIME);
+    }
+
     public boolean lockWithLua(String lockKey, String lockValue, long expireTime){
-        LUA_SHA.compareAndSet(null, redisCommands.scriptLoad(LOCK_LUA));
-        return redisCommands.evalsha(LUA_SHA.get(), ScriptOutputType.BOOLEAN, lockKey, lockValue, String.valueOf(expireTime));
+        LUA_SHA_LOCK.compareAndSet(null, redisCommands.scriptLoad(LOCK_LUA));
+        return redisCommands.evalsha(LUA_SHA_LOCK.get(), ScriptOutputType.BOOLEAN, new String[]{lockKey}, lockValue, String.valueOf(expireTime));
     }
 
     public boolean unLock(String lockKey, String lockValue) {
-        LUA_SHA.compareAndSet(null, redisCommands.scriptLoad(UNLOCK_LUA));
-        return redisCommands.evalsha(LUA_SHA.get(), ScriptOutputType.BOOLEAN, lockKey, lockValue);
+        LUA_SHA_UNLOCK.compareAndSet(null, redisCommands.scriptLoad(UNLOCK_LUA));
+        return redisCommands.evalsha(LUA_SHA_UNLOCK.get(), ScriptOutputType.BOOLEAN, new String[]{lockKey}, lockValue);
     }
 }
