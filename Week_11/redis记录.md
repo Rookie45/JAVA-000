@@ -17,3 +17,32 @@ eval "if redis.call('setnx',KEYS[1],ARGV[1]) == 1 then redis.call('expire',KEYS[
 eval "if redis.call('get',KEYS[1]) == ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end" 1 "lock1" "thread-1"
 ```
 
+
+
+```java
+io.lettuce.core.api.sync.RedisCommands类调用lua脚本的函数
+<T> T evalsha(String digest, ScriptOutputType type, K[] keys, V... values);
+这里需要注意的是keys是数组，如果不以数组传入，则调用的是下面这个函数。
+<T> T evalsha(String digest, ScriptOutputType type, K... keys);
+```
+
+
+
+直接执行`del mylock` 会导致 **释放了不该释放的锁** ，如下举例：
+
+|        |                                |                                           |                                    |
+| :----: | ------------------------------ | ----------------------------------------- | ---------------------------------- |
+| 时间线 | 线程1                          | 线程2                                     | 线程3                              |
+| 时刻1  | 执行 setnx mylock val1 加锁    | 执行 setnx mylock val2 加锁               | 执行 setnx mylock val2 加锁        |
+| 时刻2  | 加锁成功                       | 加锁失败                                  | 加锁失败                           |
+| 时刻3  | 执行任务...                    | 尝试加锁...                               | 尝试加锁...                        |
+| 时刻4  | 任务继续（锁超时，自动释放了） | setnx 获得了锁（因为线程1的锁超时释放了） | 仍然尝试加锁...                    |
+| 时刻5  | 任务完毕，del mylock 释放锁    | 执行任务中...                             | 获得了锁（因为线程1释放了线程2的） |
+|  ...   |                                |                                           |                                    |
+
+
+
+**参考**
+
+[Lua脚本在redis分布式锁场景的运用](https://www.cnblogs.com/demingblog/p/9542124.html)
+
