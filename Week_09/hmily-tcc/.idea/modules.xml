@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/hmily-tcc-common/hmily-tcc-common.iml" filepath="$PROJECT_DIR$/hmily-tcc-common/hmily-tcc-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hmily-tcc-consumer/hmily-tcc-consumer.iml" filepath="$PROJECT_DIR$/hmily-tcc-consumer/hmily-tcc-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hmily-tcc-demo.iml" filepath="$PROJECT_DIR$/hmily-tcc-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hmily-tcc-provider/hmily-tcc-provider.iml" filepath="$PROJECT_DIR$/hmily-tcc-provider/hmily-tcc-provider.iml" />
+    </modules>
+  </component>
+</project>
