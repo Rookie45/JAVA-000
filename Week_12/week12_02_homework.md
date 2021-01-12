@@ -2,7 +2,7 @@
 
 1、 （必做） 搭建ActiveMQ服务， 基于JMS， 写代码分别实现对于queue和topic的消息生产和消费， 代码提交到github。
 
-[]()
+[activemq](https://github.com/Rookie45/JAVA-000/tree/main/Week_12/activemq)
 
 2、 （选做） 基于数据库的订单表， 模拟消息队列处理订单：
 
