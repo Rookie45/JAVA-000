@@ -4,6 +4,8 @@
 
 **答题如下**
 
+[spring-kafka](https://github.com/Rookie45/JAVA-000/tree/main/Week_13/spring-kafka)
+
 2、 （选做） 安装kafka-manager工具， 监控kafka集群状态。
 
 3、 （挑战☆） 演练本课提及的各种生产者和消费者特性。
