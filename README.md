@@ -1,5 +1,8 @@
 附加题，p6/p7水平，真正融会贯通。
 
+其他优秀作业
+https://shimo.im/sheets/JvVYyhxJwwtRvtTD/7MkU8
+
 ### 1. JVM
 
 从Classloader到模块化，动态加载的插件机制。
